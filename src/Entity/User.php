@@ -66,7 +66,7 @@ class User implements UserInterface
     private $roles=[];
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adhesion", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Adhesion", cascade={"persist","remove"})
      */
     private $adhesion;
 

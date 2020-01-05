@@ -70,6 +70,7 @@ class AdhesionController extends AbstractController
     {
         $user=$this->getUser();
         $adhesion = $user->getAdhesion();
+        $userName = $user->getUsername();
         // $adhesionId = $adhesion->getId();
         $adhesionId = $user->getAdhesion() ? $user->getAdhesion()->getId() : null;
         
@@ -101,10 +102,10 @@ class AdhesionController extends AbstractController
                 // return $this->render('adhesion/bravoAdherent.html.twig');
                 $message_inscription=" Votre statut change. Maintenant vous etes un ADHERENT. votre n° est: FPIAD-" .$user->getAdhesion()->getId(). " Le Pr,  K.L. Gbagbo vous remercie de votre confiance. ";
             
-                return $this->redirectToRoute('envoiesms_general', [
-                'number_phone'  => $user->getUsername(),
+                return $this->redirectToRoute('envoiesms_adherent', [
+                'number_phone'  => $userName,
                 'message_phone' => $message_inscription,
-                'Controller_name' => 'EnvoiesmsController'
+                'Controller_name' => 'EnvoiesmsController',
             ]);
             }
             return $this->redirectToRoute('home');

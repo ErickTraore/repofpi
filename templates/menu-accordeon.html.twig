@@ -7,6 +7,11 @@
       </ul>
    </li>
     <li><a href="#">Etre sympathisant</a>
+     <li><a href="#">Don sympathisant</a>
+      <ul>
+         <li><a href="{{ path('cotisation_formdon') }}">Dons</a></li>
+      </ul>
+   </li>
     <li><a href="#">Devenir Adhérent</a>
       <ul>
          <li><a href="{{ path('adhesion_new') }}">Formulaire d'adhésion</a></li>
@@ -17,28 +22,43 @@
           {% endif %}
       </ul>
    </li>
+       {% if is_granted ('ROLE_ADHERENT') %} 
 	<li><a href="#">Cotisations</a>
       <ul>
-       {% if is_granted ('ROLE_ADHERENT') %} 
          <li><a href="{{ path('cotisation_formPaiement') }}">Mensuelle/annuel</a></li>
          <li><a href="{{ path('cotisation_formdon') }}">Dons</a></li>
          <li><a href="{{ path('count_attestation') }}">Attestation de paiement</a></li>
-       {% endif %} 
 
       </ul>
    </li>
-   <li><a href="#">Tableau de bord</a>  
-      <ul>
+       {% endif %} 
        {% if is_granted ('ROLE_MANAGER_LYON') %} 
-         {# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
-      {% endif %}
+
+   <li><a href="#">Tableau Manager</a>  
+      <ul>
          <li><a href="#">Liste-Sympathisants</a></li>
          <li><a href="#">Liste-Adherent</a></li>
          <li><a href="#">Total Abonnement</a></li>
          <li><a href="#">Total dons</a></li>
          <li><a href="#">Total vente</a></li>
+       
       </ul>
    </li>
+      {% endif %}
+       {% if is_granted ('ROLE_ADMIN') %}         
+
+   <li><a href="#">Tableau Admin</a>  
+      <ul>
+         <li><a href="#">Liste-Sympathisants</a></li>
+         <li><a href="#">Liste-Adherent</a></li>
+         <li><a href="#">Total Abonnement</a></li>
+         <li><a href="#">Total dons</a></li>
+         <li><a href="#">Total vente</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
+ 
+      </ul>
+   </li>
+      {% endif %}
+
    <li><a href="#">Mot de Pass</a>
       <ul>
          <li><a href="{{ path('mdpupdate') }}">Remplacez</a></li>

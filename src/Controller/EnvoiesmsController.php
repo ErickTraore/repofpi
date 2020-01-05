@@ -8,8 +8,10 @@ use App\Entity\User;
 use App\Entity\smspartnerapi;
 use App\Form\FpilyonType;
 use App\Repository\FpilyonRepository;
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +40,9 @@ class EnvoiesmsController extends AbstractController
      }
 
       /**
-     * @Route("/general/{number_phone}/{message_phone}", name="envoiesms_general")
+     * @Route("/sympathisant/{number_phone}/{message_phone}", name="envoiesms_sympathisant")
      */
-    public function envoiesms(Request $request, $number_phone, $message_phone): Response
+    public function sympasms(Request $request, $number_phone, $message_phone): Response
     {
       //  en attente des variables "message_phone" et "number_phone"
             if (isset($message_phone) && isset($number_phone)) {
@@ -73,12 +75,58 @@ class EnvoiesmsController extends AbstractController
                     curl_close($ch);
                     // Ecriture de la réponse
               //      echo $response;
-             return $this->render('adhesion/envoiesmsok.html.twig');
-
+                  return $this->render('adhesion/envoiesmsok.html.twig');
+            
                 }
                 
             
-        return $this->render('adhesion/bravoAdherent.html.twig');
+        return $this->render('page_erreurr_sms.html.twig');
+
+    }
+
+       /**
+     * @Route("/adherent/{number_phone}/{message_phone}", name="envoiesms_adherent")
+     */
+    public function adherentsms(Request $request, $number_phone, $message_phone): Response
+    {
+      //  en attente des variables "message_phone" et "number_phone"
+            if (isset($message_phone) && isset($number_phone)) {
+
+                    $postUrl = "https://sms.capitolemobile.com/api/sendsms/xml.php";
+                    //Structure de Données XML
+                    $xmlString = '<SMS>
+                                                <authentification>
+                                                     <username>0778343941</username>
+                                                     <password>Erick2691</password>
+                                             </authentification>
+                                                 <message>
+                                                         <long>yes</long>
+                                                         <text> '.$message_phone.' </text>
+                                                         <sender>FPI FRANCE</sender>
+                                                 </message>
+                                             <recipients>
+                                                     <gsm>'.$number_phone.'</gsm>
+                                             </recipients>
+                                     </SMS>';
+                    // insertion du nom de la variable POST "XML" avant les données au format XML
+                    $fields = "XML=" . urlencode(utf8_encode($xmlString));
+                    // dans cet exemple, la requête POST est realisée grâce à la librairie Curl
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $postUrl);
+                    curl_setopt($ch, CURLOPT_POST, 1);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                    // Réponse de la requête POST
+                    $response = curl_exec($ch);
+                    curl_close($ch);
+                    // Ecriture de la réponse
+              //      echo $response;
+              
+                return $this->render('adhesion/bravoAdherent.html.twig');
+                      
+                }
+                
+            
+        return $this->render('page_erreurr_sms.html.twig');
 
     }
 

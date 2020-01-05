@@ -67,7 +67,7 @@ class SecurityController extends AbstractController
     }
  
     /**
-     * @Route("register", name="app_register")
+     * @Route("register", name="app_register", methods={"GET","POST"})
      * 
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
@@ -95,10 +95,10 @@ class SecurityController extends AbstractController
             $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
             $message_inscription = " Bravo, vous etes maintenant inscrit au FPI sous le statut de SYMPATHISANT,ref: FPI-INS" . $datanum ." La direction du FPI vous remercie de votre confiance. ";
             //vérouillage ou dévérouillage des envois sms grace à $insertisok
-          //  $smsok = false;
+           // $smsok = false;
             $smsok = true;
             if ($smsok) {
-                return $this->redirectToRoute('envoiesms_general',[
+                return $this->redirectToRoute('envoiesms_sympathisant',[
                     'number_phone'  => $user->getUsername(),
                     'message_phone' => $message_inscription,
                     'Controller_name' => 'EnvoiesmsController'
