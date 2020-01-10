@@ -34,11 +34,10 @@
 
    <li><a href="#">Tableau Lyon</a>  
       <ul>
-         {# "{{ path('tablelyon_new') }}" #}
+         {# "{{ path('tablelyon_bureau') }}" #}
          <li><a href="{{ path('tablelyon_new') }}">Enregistrement</a></li>
-         <li><a href="#">Liste-Sympathisants</a></li>
-         <li><a href="#">Liste-Adherent</a></li>
-         <li><a href="#">Liste-Bureau</a></li>
+         <li><a href="{{ path('tablelyon_index') }}">Liste-Section-Lyon-I</a></li>
+         <li><a href="{{ path('tablelyon_bureau') }}">Liste-Bureau</a></li>
        
       </ul>
    </li>

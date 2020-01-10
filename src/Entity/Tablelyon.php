@@ -41,6 +41,11 @@ class Tablelyon
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $titre;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Tablelyon
     public function setRoles(?string $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(?string $titre): self
+    {
+        $this->titre = $titre;
 
         return $this;
     }

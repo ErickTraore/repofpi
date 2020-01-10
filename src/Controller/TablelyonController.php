@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tablelyon;
 use App\Form\TablelyonType;
 use App\Repository\TablelyonRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,16 @@ class TablelyonController extends AbstractController
     {
         return $this->render('tablelyon/index.html.twig', [
             'tablelyons' => $tablelyonRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/bureau", name="tablelyon_bureau", methods={"GET"})
+     */
+    public function bureau(TablelyonRepository $tablelyonRepository): Response
+    {
+        return $this->render('tablelyon/index.html.twig', [
+            'tablelyons' => $tablelyonRepository->findByTitre(),
         ]);
     }
 
