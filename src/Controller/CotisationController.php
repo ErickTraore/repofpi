@@ -61,8 +61,8 @@ class CotisationController extends AbstractController
             $user = $this->getUser();
             $adhesion = $user->getAdhesion();
             $adhesionId = $user->getAdhesion()->getId();
-            var_dump($amountdeux );
-            var_dump($description );
+            // var_dump($amountdeux );
+            // var_dump($description );
 
            
             if (!empty($amountdeux) && !empty($description) && !empty($adhesion) && !empty($ref) && !empty($nbremois)) {
@@ -96,7 +96,7 @@ class CotisationController extends AbstractController
             'source' => $token,
                   ]);
                 $description = 'paiement en ligne';
-                $ref = 'Don';
+                $ref = 'Abonnement';
                 $user = $this->getUser();
                 $adhesion = $user->getAdhesion();
                 $adhesionId = $user->getAdhesion()->getId();
@@ -111,6 +111,41 @@ class CotisationController extends AbstractController
                 }
             }
             return $this->render('cotisation/traitement_stripeabonnement.html.twig');
+        }
+
+         /**
+    * @Route("/paiement_carte", name="cotisation_paiement_carte")
+    */
+    public function paiement_carte(Request $request, AdhesionRepository $repository)
+    {
+            if (isset($_POST['stripeToken'])) {
+                \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+                // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+                $token = $_POST['stripeToken'];
+            
+                $amountdeux = $_POST['amountun'];
+                // $nbremois = ($amountdeux / 500);
+                $charge = \Stripe\Charge::create([
+            'amount' => $amountdeux,
+            'currency' => 'eur',
+            'description' => 'Discover France Guide',
+            'source' => $token,
+                  ]);
+                $description = 'paiement en ligne';
+                $ref = 'achat carte';
+                $user = $this->getUser();
+                $adhesion = $user->getAdhesion();
+                $adhesionId = $user->getAdhesion()->getId();
+           
+                if (!empty($amountdeux) && !empty($description) && !empty($adhesion) && !empty($ref)) {
+                    return $this->redirectToRoute('adhesion_maj_carte', [
+                    'adhesionId' => $adhesionId,
+                    'ref' => $ref,
+                    'amountdeux' => $amountdeux
+                ]);
+                }
+            }
+            return $this->render('cotisation/traitement_stripecarte.html.twig');
         }
   
 
@@ -152,6 +187,27 @@ class CotisationController extends AbstractController
                  ]);
         }
         return $this->render('cotisation/formdon.html.twig');
+    }
+
+        /**
+    * @Route("/formCarte", name="cotisation_formCarte")
+    */
+    public function formCarte(Request $request):Response
+    {
+        if (!empty($_POST['amountun'])) {
+            $extractarif = $_POST['amountun'];     
+
+            // if ($_POST['Annuler'] = "Annuler") {
+            //     return $this->redirectToRoute('home');  
+            // }
+ 
+
+  
+            return $this->render('cotisation/traitement_stripecarte.html.twig', [
+      'amountdeux' => $extractarif,
+                 ]);
+        }
+        return $this->render('cotisation/formCarte.html.twig');
     }
 
     

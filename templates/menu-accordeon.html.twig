@@ -25,6 +25,7 @@
        {% if is_granted ('ROLE_ADHERENT') %} 
 	<li><a href="#">Cotisations</a>
       <ul>
+         <li><a href="{{ path('cotisation_formCarte') }}">Paiement Carte Adhesion</a></li>
          <li><a href="{{ path('cotisation_formPaiement') }}">Mensuelle/annuel</a></li>
          <li><a href="{{ path('cotisation_formdon') }}">Dons</a></li>
          <li><a href="{{ path('count_attestation') }}">Attestation de paiement</a></li>
@@ -34,24 +35,29 @@
 
    <li><a href="#">Tableau Lyon</a>  
       <ul>
-         {# "{{ path('tablelyon_bureau') }}" #}
+         {# "{{ path('count_makeCarte') }}" #}
          <li><a href="{{ path('tablelyon_new') }}">Enregistrement</a></li>
          <li><a href="{{ path('tablelyon_index') }}">Liste-Section-Lyon-I</a></li>
          <li><a href="{{ path('tablelyon_bureau') }}">Liste-Bureau</a></li>
        
       </ul>
    </li>
-      {% endif %}
-       {% if is_granted ('ROLE_ADMIN') %}         
+       {# {% if is_granted ('ROLE_ADMIN') %}          #}
 
    <li><a href="#">Tableau Admin</a>  
       <ul>
          <li><a href="#">Liste-Sympathisants</a></li>
-         <li><a href="#">Liste-Adherent</a></li>
-         <li><a href="#">Total Abonnement</a></li>
-         <li><a href="#">Total dons</a></li>
-         <li><a href="#">Total vente</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
+         <li><a href="#">Liste-Adherents</a></li>
+         <li><a href="{{ path('user_makeCarte') }}">Liste-Total</a></li>
+         <li><a href="#">Paiements adhesions</a></li>
+         <li><a href="#">Paiements dons</a></li>
+         <li><a href="#">Paiements ventes</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
  
+      </ul>
+   </li>
+     <li><a href="#">Tableau Technique</a>  
+      <ul>
+         <li><a href="#">Création-Adherents</a></li>
       </ul>
    </li>
       {% endif %}

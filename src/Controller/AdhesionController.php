@@ -242,6 +242,39 @@ class AdhesionController extends AbstractController
             return $this->redirectToRoute('home');
       }
 
+            /**
+       *
+       * @Route("/maj_carte/{adhesionId}/{amountdeux}/{ref}", name="adhesion_maj_carte")
+       * @param Request            $request
+       * @param AdhesionRepository $repository
+       * @return Response
+       */
+      public function maj_carte(Request $request, $adhesionId, $amountdeux, $ref):Response 
+      {
+        $description = 'paiement en ligne';
+        // $ref = 'don';
+            $user = $this->getUser();
+            $adhesion = $user->getAdhesion();
+        $count = new Count();
+            $count->setAdhesion($adhesion);
+        //    $form_count = $this->createForm(CountType::class, $count);
+            $count->setRef($ref);
+            $count->setDescription($description);
+        //   $form_count->handleRequest($request);
+            $count->setTotalTtc($amountdeux);
+        //  $count->setDate_Echeance(new \DateTime($dateDepart->format('Y-m-d H:i:s.u')));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($count);
+        $em->flush();
+        if (! $adhesion) 
+        {
+            return new Response('cette opération de paiement a réussie mais echec des données');
+        } 
+           // return new Response('cette maj don échéance a bien réussie');
+            return $this->redirectToRoute('home');
+      }
+
       /**
        * @Route("/viewUpload", name="adhesion_viewUpload", methods={"GET","POST"})
        */

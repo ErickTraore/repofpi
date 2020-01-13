@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Attestation de paiement{% endblock %}
+
+{% block body %}
+
+ <div class="well">
+ <ul>
+            <div> <img src="{{ asset('assets/img/logofpi.png') }}" class="img-circle"  alt="logo"></div>
+				<h4>FRONT  POPULAIRE  IVOIRIEN</h4>        
+				<h6>Représentation FPI-FRANCE</h6>        
+			</div>
+
+<caption class="well well-sm"><h2> Creation Carte Adhesion</h2></caption>
+
+    <table>
+            <tr>
+                <th class="well">Sex:</th>
+                <th class="well">N°Adher:</th>
+                <th class="well">Nom </th>
+                <th class="well">Prenom </th>
+                <th class="well">Naissance </th>
+                <th class="well">lieu naiss </th>
+                <th class="well">Profession </th>
+            </tr>
+          {#    {% for count in counts %}
+            <tr> #}
+                <td class="well well-sm">{{ adhesiongender }}</td>
+                <td class="well well-sm">{{ adhesionId }}</td>
+                <td class="well well-sm">{{ adhesionfirstname }}</td>
+                <td class="well well-sm">{{ adhesionlastname }}</td>
+                <td class="well well-sm">{{ adhesionbirthday | default("") | date('d-m-Y')  }}</td>
+                <td class="well well-sm">{{ adhesionlieunaiss }}</td>
+                <td class="well well-sm">{{ adhesionprofession }}</td>
+           
+            </tr>
+             {# {% else %}
+                <li>Nous ne trouvons aucune facture.</li>
+            {% endfor %} #}
+         
+    </table>  
+</u>
+</div>
+<a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
+
+</div>
+{% endblock %} 

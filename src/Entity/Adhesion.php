@@ -104,6 +104,7 @@ class Adhesion
      * @Assert\DateTime()
      */
     private $dateecheancebis;
+    
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
