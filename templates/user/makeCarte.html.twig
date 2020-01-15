@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attestation de paiement{% endblock %}
+{% block title %}Creation Carte Adhesion{% endblock %}
 
 {% block body %}
 
@@ -14,7 +14,11 @@
 <caption class="well well-sm"><h2> Creation Carte Adhesion</h2></caption>
 
     <table>
-            <tr>
+
+      
+    {% if count.ref is defined %}
+                <td class="well well-sm">{{ count.ref }}</td>
+                        <tr>
                 <th class="well">Sex:</th>
                 <th class="well">N°Adher:</th>
                 <th class="well">Nom </th>
@@ -22,21 +26,30 @@
                 <th class="well">Naissance </th>
                 <th class="well">lieu naiss </th>
                 <th class="well">Profession </th>
+                <th class="well">N° rue </th>
+                <th class="well">Nom rue </th>
+                <th class="well">Nom ville </th>
+                <th class="well">Nom pays </th>
+                <th class="well">code postale </th>
+                <th class="well">Photo </th>
             </tr>
-          {#    {% for count in counts %}
-            <tr> #}
+          
+            <tr> 
                 <td class="well well-sm">{{ adhesiongender }}</td>
                 <td class="well well-sm">{{ adhesionId }}</td>
                 <td class="well well-sm">{{ adhesionfirstname }}</td>
                 <td class="well well-sm">{{ adhesionlastname }}</td>
                 <td class="well well-sm">{{ adhesionbirthday | default("") | date('d-m-Y')  }}</td>
-                <td class="well well-sm">{{ adhesionlieunaiss }}</td>
+                <td class="well well-sm">{{ adhesionlieunaissance }}</td>
                 <td class="well well-sm">{{ adhesionprofession }}</td>
-           
+                <td class="well well-sm">{{ adhesionnorue }}</td>
+                <td class="well well-sm">{{ adhesionnomrue }}</td>
+                <td class="well well-sm">{{ adhesionville }}</td>
+                <td class="well well-sm">{{ adhesionpays }}</td>
+                <td class="well well-sm">{{ adhesioncodepostale }}</td>
+                 {# <td> <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ im) }}'></td> #}
             </tr>
-             {# {% else %}
-                <li>Nous ne trouvons aucune facture.</li>
-            {% endfor %} #}
+    {% endif %}
          
     </table>  
 </u>

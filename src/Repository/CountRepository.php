@@ -36,15 +36,26 @@ class CountRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Count
+    // public function findOneByref($value): ?Count
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->andWhere('c.ref = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+
+    /**
+     * @return Count[] Returns an array of Count objects
+     */
+    public function findByref($value): ?Count
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->where('c.ref = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }

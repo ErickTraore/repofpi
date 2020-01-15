@@ -110,6 +110,16 @@ class Adhesion
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $norue;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nomrue;
     
     public function __construct()
     {
@@ -331,6 +341,30 @@ class Adhesion
     public function setImage($image)
     {
         $this->image = $image;
+        return $this;
+    }
+
+    public function getNorue(): ?string
+    {
+        return $this->norue;
+    }
+
+    public function setNorue(?string $norue): self
+    {
+        $this->norue = $norue;
+
+        return $this;
+    }
+
+    public function getNomrue(): ?string
+    {
+        return $this->nomrue;
+    }
+
+    public function setNomrue(?string $nomrue): self
+    {
+        $this->nomrue = $nomrue;
+
         return $this;
     }
 

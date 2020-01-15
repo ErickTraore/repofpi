@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Image
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  */
 class Image
@@ -26,15 +27,38 @@ class Image
         return $this->id;
     }
 
+    /**
+     * Get imageName
+     *
+     * @return string
+     */
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
+     /**
+     * Set imageName
+     *
+     * @param string $imageName
+     *
+     * @return Image
+     */
     public function setImageName(?string $imageName): self
     {
         $this->imageName = $imageName;
 
         return $this;
+    }
+
+      /**
+     * Generates the magic method
+     * 
+     */
+    public function __toString(){
+        // to show the name of the Category in the select
+        return $this->imageName;
+        // to show the id of the Category in the select
+        // return $this->id;
     }
 }

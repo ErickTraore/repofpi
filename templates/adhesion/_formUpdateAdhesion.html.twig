@@ -43,6 +43,16 @@
 {{ form_errors(form.numberIdentity) }}
 </div>
 <div class="form-group">
+{{ form_label(form.norue, 'N° Rue') }}
+{{ form_widget(form.norue, {'attr':{'class':'form-control'}}) }}
+{{ form_errors(form.norue) }}
+</div>
+<div class="form-group">
+{{ form_label(form.nomrue, 'Nom Rue') }}
+{{ form_widget(form.nomrue, {'attr':{'class':'form-control'}}) }}
+{{ form_errors(form.nomrue) }}
+</div>
+<div class="form-group">
 {{ form_label(form.ville, 'Ville') }}
 {{ form_widget(form.ville, {'attr':{'class':'form-control'}}) }}
 {{ form_errors(form.ville) }}

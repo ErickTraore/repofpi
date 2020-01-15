@@ -2,9 +2,18 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Asset\Package ;
+use Symfony\Component\Asset\Packages ;
+use Symfony\Component\Asset\PathPackage ;
+use Symfony\Component\Asset\UrlPackage ;
+use App\Entity\Adhesion; 
+use App\Entity\Count; 
+use App\Entity\Image;
 use App\Entity\User;
 use App\Form\User1Type;
 use App\Repository\AdhesionRepository;
+use App\Repository\ImageRepository;
+use App\Repository\CountRepository;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -19,32 +28,99 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+     /**
+     * @Route("/commandecarte", name="user_commandecarte")
+     */
+    public function commandecarte(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
+    {
+         $counts = $countRepository->findBy([
+            'ref' => 'carte_2020'
+        ]);
+        $listrusers[]='';
+
+        foreach ($counts as $count) {
+            $adhesion = $count->getAdhesion();
+            $adhesionid = $adhesion->getId();
+            $image = $adhesion->getImage();
+            $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
+         
+        
+        }
+            return $this->render('user/makeBisCarte.html.twig', [
+                'listusers' => $listusers
+                ]);
+
+            // return $this->render('user/makeBisCarte.html.twig', [
+            //     'userids'=>$userid,
+            //     'users'=>$users
+            //     ]);      
+         
+            // $adhesionfirstname = $adhesion->getFirstName();
+            // $adhesionlastname = $adhesion->getLastname();
+            // $adhesionbirthday = $adhesion->getBirthday();
+            // $adhesionlieunaiss = $adhesion->getlieunaissance();
+            // $adhesiongender = $adhesion->getGender();
+            // $adhesionprofession = $adhesion->getProfession();
+            // $adhesionnorue = $adhesion->getNorue();
+            // $adhesionnomrue = $adhesion->getNomrue();
+            // $adhesionville = $adhesion->getVille();
+            // $adhesionpays = $adhesion->getPays();
+            // $adhesioncodepostale = $adhesion->getCodepostale();
+            // return $this->render('user/makeCarte.html.twig', [
+            // 'count' => $count,
+            // // 'counts' => $counts,
+            // 'adhesiongender'=> $adhesiongender,
+            // 'adhesionId' => $adhesionid,
+            // 'adhesionfirstname' => $adhesionfirstname,
+            // 'adhesionlastname' => $adhesionlastname,
+            // 'adhesionbirthday' => $adhesionbirthday,
+            // 'adhesionlieunaiss' => $adhesionlieunaiss,
+            // 'adhesionprofession'=> $adhesionprofession,
+            // 'adhesionnorue'=> $adhesionnorue,
+            // 'adhesionnomrue'=> $adhesionnomrue,
+            // 'adhesionville' => $adhesionville,
+            // 'adhesionpays' => $adhesionpays,
+            // 'adhesioncodepostale' => $adhesioncodepostale,
+            // // 'im' => $imageimagename
+        }  
+    
     /**
      * @Route("/makeCarte", name="user_makeCarte")
      */
-    public function makeCarte():Response
+    public function makeCarte(UserRepository $userRepository, CountRepository $countRepository):Response
     {
+        $users = $userRepository->findAll();
         $user = $this->getUser();
         $adhesion = $user->getAdhesion();
         $adhesionId = $adhesion->getId();
+        $count = $countRepository->findOneByref('carte_2020');
+
+        
         $adhesionfirstname = $adhesion->getFirstName();
         $adhesionlastname = $adhesion->getLastname();
         $adhesionbirthday = $adhesion->getBirthday();
         $adhesionlieunaiss = $adhesion->getlieunaissance();
         $adhesiongender = $adhesion->getGender();
         $adhesionprofession = $adhesion->getProfession();
-        // $adhesion = $adhesion->get();
-        // $adhesion = $adhesion->get();
-        // $adhesion = $adhesion->get();
-        // $adhesion = $adhesion->get();
-       
-        // $counts = $countRepository->findBy(
-       //     array('adhesion' => $adhesionId) // Critere 
-       // );
-       
-        //return new Response('et alors');
+        $adhesionnorue = $adhesion->getNorue();
+        $adhesionnomrue = $adhesion->getNomrue();
+        $adhesionville = $adhesion->getVille();
+        $adhesionpays = $adhesion->getPays();
+        $adhesioncodepostale = $adhesion->getCodepostale();
+        
+        $image = $adhesion->getImage();
+        $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
+        if(!$imageId)
+        {
+        return $this->render('images/echec_vue_image.html.twig');
+            
+        }
+        $imageimagename = $image->getImageName();
+
+        
         return $this->render('user/makeCarte.html.twig'
         ,[
+            'count' => $count,
             // 'counts' => $counts,
             'adhesiongender'=> $adhesiongender,
             'adhesionId' => $adhesionId,
@@ -52,8 +128,14 @@ class UserController extends AbstractController
             'adhesionlastname' => $adhesionlastname,
             'adhesionbirthday' => $adhesionbirthday,
             'adhesionlieunaiss' => $adhesionlieunaiss,
-            'adhesionprofession'=> $adhesionprofession 
-        ]);
+            'adhesionprofession'=> $adhesionprofession, 
+            'adhesionnorue'=> $adhesionnorue,
+            'adhesionnomrue'=> $adhesionnomrue,
+            'adhesionville' => $adhesionville,
+            'adhesionpays' => $adhesionpays,
+            'adhesioncodepostale' => $adhesioncodepostale,
+            'im' => $imageimagename
+            ]);
     }
 
     /**

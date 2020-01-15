@@ -44,6 +44,8 @@ class AdhesionType extends AbstractType
                 'preferred_choices' => ['muppets', 'cartident']
             ])
             ->add('numberIdentity', TextType::class)
+            ->add('norue', TextType::class)
+            ->add('nomrue', TextType::class)
             ->add('ville', TextType::class)
             ->add('codepostale', TextType::class)
             ->add('pays', TextType::class)

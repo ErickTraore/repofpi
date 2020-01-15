@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Adhesion;
 use App\Entity\Count;
-use App\Entity\adhesion;
 use App\Form\CountType;
 use App\Repository\AdhesionRepository;
 use Stripe\BalanceTransaction;
@@ -44,8 +44,8 @@ class CotisationController extends AbstractController
     public function paiement(Request $request, AdhesionRepository $repository)
     {
         if (isset($_POST['stripeToken'])) {
-            // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
-            \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+            \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+            // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
             $token = $_POST['stripeToken'];
             
             $amountdeux = $_POST['amountrois'];
@@ -83,8 +83,8 @@ class CotisationController extends AbstractController
     public function paiement_abonnement(Request $request, AdhesionRepository $repository)
     {
             if (isset($_POST['stripeToken'])) {
-                // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
-                \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+                \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+                // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
                 $token = $_POST['stripeToken'];
             
                 $amountdeux = $_POST['amountrois'];
@@ -123,7 +123,7 @@ class CotisationController extends AbstractController
                 // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
                 $token = $_POST['stripeToken'];
             
-                $amountdeux = $_POST['amountun'];
+                $amountdeux = $_POST['amountrois'];
                 // $nbremois = ($amountdeux / 500);
                 $charge = \Stripe\Charge::create([
             'amount' => $amountdeux,
@@ -132,7 +132,8 @@ class CotisationController extends AbstractController
             'source' => $token,
                   ]);
                 $description = 'paiement en ligne';
-                $ref = 'achat carte';
+                $ref = 'carte_2020';
+                //$ref = 'Carte 2021';
                 $user = $this->getUser();
                 $adhesion = $user->getAdhesion();
                 $adhesionId = $user->getAdhesion()->getId();

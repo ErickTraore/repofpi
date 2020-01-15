@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creation Carte Adhesion{% endblock %}
+
+{% block body %}
+ <div class="well">
+ <ul>
+            <div> <img src="{{ asset('assets/img/logofpi.png') }}" class="img-circle"  alt="logo"></div>
+				<h4>FRONT  POPULAIRE  IVOIRIEN</h4>        
+				<h6>Représentation FPI-FRANCE</h6>        
+			</div>
+
+<caption class="well well-sm"><h2> Creation Carte Adhesion</h2></caption>
+
+    <table>
+
+      
+    {# {% if count.ref is defined %} #}
+                {# <td class="well well-sm">{{ count.ref }}</td> #}
+            <tr>
+                <th class="well">id:</th>
+                <th class="well">Sex:</th>
+                <th class="well">N°Tel:</th>
+                <th class="well">N°Adher:</th>
+                <th class="well">Nom </th>
+                <th class="well">Prenom </th>
+                <th class="well">Naissance </th>
+                <th class="well">lieu naiss </th>
+                <th class="well">Profession </th>
+                <th class="well">N° rue </th>
+                <th class="well">Nom rue </th>
+                <th class="well">Nom ville </th>
+                <th class="well">Nom pays </th>
+                <th class="well">code postale </th>
+                <th class="well">Photo </th>
+            </tr>
+            
+  
+
+         {% for user in listusers  %}
+         {% dump(user) %} 
+         <tr> 
+                <td class="well well-sm">{{ user.id }}</td>
+                <td class="well well-sm">{{ user.adhesion.gender }}</td>
+                <td class="well well-sm">{{ user.username }}</td>
+                <td class="well well-sm">{{ user.adhesion.id }}</td>
+                <td class="well well-sm">{{ user.adhesion.firstname }}</td>
+                <td class="well well-sm">{{ user.adhesion.lastname }}</td>
+                <td class="well well-sm">{{ user.adhesion.birthday | default("") | date('d-m-Y')  }}</td>
+                <td class="well well-sm">{{ user.adhesion.lieunaissance }}</td>
+                <td class="well well-sm">{{ user.adhesion.profession }}</td>
+                <td class="well well-sm">{{ user.adhesion.norue }}</td>
+                <td class="well well-sm">{{ user.adhesion.nomrue }}</td>
+                <td class="well well-sm">{{ user.adhesion.ville }}</td>
+                <td class="well well-sm">{{ user.adhesion.pays }}</td>
+                <td class="well well-sm">{{ user.adhesion.codepostale }}</td>
+                {# <td class="well well-sm">{{ user.adhesion.image.id | default("") }}</td> #}
+            {# <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ user.adhesion.image) }}' #}
+
+                <td> <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ user.adhesion.image | default("")) }}'></td>
+
+         </tr>
+         {% endfor %}
+
+
+           
+    {# {% endif %} #}
+         
+    </table>  
+</u>
+</div>
+<a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
+
+</div>
+{% endblock %} 
