@@ -35,25 +35,28 @@
                 <th class="well">Photo </th>
             </tr>
             
+         {% dump(listusers) %} 
   
 
          {% for user in listusers  %}
-         {% dump(user) %} 
+         {# {% dump(user.id) %}  #}
+
          <tr> 
+         {# {{ user.id }} #}
                 <td class="well well-sm">{{ user.id }}</td>
-                <td class="well well-sm">{{ user.adhesion.gender }}</td>
-                <td class="well well-sm">{{ user.username }}</td>
-                <td class="well well-sm">{{ user.adhesion.id }}</td>
-                <td class="well well-sm">{{ user.adhesion.firstname }}</td>
-                <td class="well well-sm">{{ user.adhesion.lastname }}</td>
+                <td class="well well-sm">{{ user.adhesion.gender | default("") }}</td>
+                <td class="well well-sm">{{ user.username  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.id  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.firstname  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.lastname  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.birthday | default("") | date('d-m-Y')  }}</td>
-                <td class="well well-sm">{{ user.adhesion.lieunaissance }}</td>
-                <td class="well well-sm">{{ user.adhesion.profession }}</td>
-                <td class="well well-sm">{{ user.adhesion.norue }}</td>
-                <td class="well well-sm">{{ user.adhesion.nomrue }}</td>
-                <td class="well well-sm">{{ user.adhesion.ville }}</td>
-                <td class="well well-sm">{{ user.adhesion.pays }}</td>
-                <td class="well well-sm">{{ user.adhesion.codepostale }}</td>
+                <td class="well well-sm">{{ user.adhesion.lieunaissance  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.profession  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.norue  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.nomrue  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.ville  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.pays  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.codepostale  | default("") }}</td>
                 {# <td class="well well-sm">{{ user.adhesion.image.id | default("") }}</td> #}
             {# <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ user.adhesion.image) }}' #}
 

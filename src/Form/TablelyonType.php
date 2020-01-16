@@ -24,7 +24,7 @@ class TablelyonType extends AbstractType
                 'choices' => [
                     'ROLE_SYMPATHISANT' => 'ROLE_SYMPATHISANT',
                     'ROLE ADHERENT' => 'ROLE_ADHERENT',
-                    'ROLE_MANAGER'   => 'ROLE_MANAGER',
+                    'ROLE_MANAGER_LYON'   => 'ROLE_MANAGER_LYON',
                     'ROLE_ADMIN' => 'ROLE_ADMIN',
                 ],
                 'preferred_choices' => ['muppets', 'ROLE_SYMPATHISANT'],

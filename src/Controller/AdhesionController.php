@@ -87,8 +87,16 @@ class AdhesionController extends AbstractController
             if ($form->get('Annuler')->isClicked()) {
                 return $this->redirectToRoute('home');
             }
-           
-            $user->setRoles(array('ROLE_ADHERENT'));
+            
+                if ($user->getUsername() == '0033778351871') {
+                    // $user->setRoles(array('ROLE_ADMIN'));
+                    $user->setRoles(array('ROLE_SUPER_ADMIN'));
+                    // $user->setRoles(array('ROLE_MANAGER_LYON'));
+                    // $user->setRoles(array('ROLE_TECHNIQUE'));
+                }
+                else {
+                    $user->setRoles(array('ROLE_ADHERENT'));
+                }   
             // $user->setRoles(array('ROLE_MANAGER_LYON'));
             $user->setAdhesion($adhesion);
             $entityManager = $this->getDoctrine()->getManager();

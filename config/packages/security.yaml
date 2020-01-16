@@ -40,6 +40,8 @@ security:
     role_hierarchy:
         # Un adherent hérite des droits des sympathisants
         ROLE_ADHERENT:       [ROLE_SYMPATHISANT]
-        ROLE_MANAGER_LYON:        [ROLE_ADHERENT, ROLE_SYMPATHISANT]
+        ROLE_TECHNIQUE:      [ROLE_TECHNIQUE, ROLE_SYMPATHISANT]
+        ROLE_MANAGER_LYON:   [ROLE_ADHERENT]
+        ROLE_ADMIN:          [ROLE_MANAGER_LYON, ROLE_TECHNIQUE] 
         # On garde ce rôle superadmin, il nous resservira par la suite
-        # ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
