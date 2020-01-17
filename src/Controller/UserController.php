@@ -36,7 +36,7 @@ class UserController extends AbstractController
          $counts = $countRepository->findBy([
             'ref' => 'carte_2020'
         ]);
-        $listrusers[]='';
+        $listusers[]='';
 
         foreach ($counts as $count) {
             $adhesion = $count->getAdhesion();
@@ -45,7 +45,8 @@ class UserController extends AbstractController
             $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
         }
             return $this->render('user/makeBisCarte.html.twig', [
-                'listusers' => $listusers
+                'listusers' => $listusers,
+                'counts' => $counts
                 ]);
         }  
         

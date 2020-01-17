@@ -15,7 +15,7 @@
     <table>
 
       
-    {# {% if count.ref is defined %} #}
+    {% if counts %}
                 {# <td class="well well-sm">{{ count.ref }}</td> #}
             <tr>
                 <th class="well">id:</th>
@@ -43,7 +43,7 @@
 
          <tr> 
          {# {{ user.id }} #}
-                <td class="well well-sm">{{ user.id }}</td>
+                <td class="well well-sm">{{ user.id | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.gender | default("") }}</td>
                 <td class="well well-sm">{{ user.username  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.id  | default("") }}</td>
@@ -67,7 +67,9 @@
 
 
            
-    {# {% endif %} #}
+    {% else %}
+   Aucune commande de carte neuve.
+{% endif %}
          
     </table>  
 </u>

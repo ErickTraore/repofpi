@@ -44,8 +44,8 @@ class CotisationController extends AbstractController
     public function paiement(Request $request, AdhesionRepository $repository)
     {
         if (isset($_POST['stripeToken'])) {
-            \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
-            // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+            // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+            \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
             $token = $_POST['stripeToken'];
             
             $amountdeux = $_POST['amountrois'];
@@ -83,8 +83,8 @@ class CotisationController extends AbstractController
     public function paiement_abonnement(Request $request, AdhesionRepository $repository)
     {
             if (isset($_POST['stripeToken'])) {
-                \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
-                // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+                // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+                \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
                 $token = $_POST['stripeToken'];
             
                 $amountdeux = $_POST['amountrois'];
@@ -119,8 +119,8 @@ class CotisationController extends AbstractController
     public function paiement_carte(Request $request, AdhesionRepository $repository)
     {
             if (isset($_POST['stripeToken'])) {
-                \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
-                // \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+                // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+                \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
                 $token = $_POST['stripeToken'];
             
                 $amountdeux = $_POST['amountrois'];
