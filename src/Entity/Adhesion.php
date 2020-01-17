@@ -36,8 +36,6 @@ class Adhesion
      */
     private $firstName;
     
-  
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -62,6 +60,23 @@ class Adhesion
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $numberIdentity;
+
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $voie;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $novoie;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nomvoie;
+
+   
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -111,16 +126,8 @@ class Adhesion
      */
     private $image;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $norue;
+ 
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $nomrue;
-    
     public function __construct()
     {
         $this->dateadhesion = new \Datetime();
@@ -344,29 +351,40 @@ class Adhesion
         return $this;
     }
 
-    public function getNorue(): ?string
+    public function getNovoie(): ?string
     {
-        return $this->norue;
+        return $this->novoie;
     }
 
-    public function setNorue(?string $norue): self
+    public function setNovoie(?string $novoie): self
     {
-        $this->norue = $norue;
+        $this->novoie = $novoie;
 
         return $this;
     }
 
-    public function getNomrue(): ?string
+    public function getNomvoie(): ?string
     {
-        return $this->nomrue;
+        return $this->nomvoie;
     }
 
-    public function setNomrue(?string $nomrue): self
+    public function setNomvoie(?string $nomvoie): self
     {
-        $this->nomrue = $nomrue;
+        $this->nomvoie = $nomvoie;
 
         return $this;
     }
 
+    public function getVoie(): ?string
+    {
+        return $this->voie;
+    }
+
+    public function setVoie(?string $voie): self
+    {
+        $this->voie = $voie;
+
+        return $this;
+    }
     
 }
