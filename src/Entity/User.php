@@ -6,6 +6,7 @@
 namespace App\Entity;
 
 use App\Controller\TestezController;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -62,11 +63,16 @@ class User implements UserInterface
      */
     private $date_crea;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $roles=[];
+    // /**
+    //  * @ORM\Column(type="array")
+    //  */
+    // private $roles=[];
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role", cascade={"persist"})
+     */
+    private $roles;
+    
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adhesion", cascade={"persist","remove"})
      */
@@ -83,7 +89,8 @@ class User implements UserInterface
     public function __construct()
     {
         
-        $this->roles = array('ROLE_SYMPATHISANT');
+        $this->roles = new ArrayCollection();
+        // $this->roles = array('ROLE_SYMPATHISANT');
         $this->date_crea = new \Datetime();
 
     }
@@ -183,11 +190,17 @@ class User implements UserInterface
         return $this->getUsername();
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
+     // Notez le singulier, on ajoute un seul role à la fois
+  public function addRole(Role $role)
+  {
+    // Ici, on utilise l'ArrayCollection vraiment comme un tableau
+    $this->roles[] = $role;
+  }
 
-        return $this;
-    }
+  public function removeRole(Role $role)
+  {
+    // Ici on utilise une méthode de l'ArrayCollection, pour supprimer la catégorie en argument
+    $this->roles->removeElement($role);
+  }
 
     }

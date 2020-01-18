@@ -48,6 +48,7 @@ class AdhesionType extends AbstractType
                 'choices' => [
                     'Aucune' => 'Aucune',
                     'route' => 'route',
+                    'route nationnale' => 'route nationnale',
                     'rue' => 'rue',
                     'allee'   => 'allee',
                     'boulevard'   => 'boulevard',

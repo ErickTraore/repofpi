@@ -11,6 +11,7 @@ use App\Repository\AdhesionRepository;
 use App\Repository\CountRepository;
 use App\Repository\ImageRepository;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -55,6 +56,7 @@ class UserController extends AbstractController
      */
     public function listetotal(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
+         addroles('ROLE_TESTUSER');
          $users = $userRepository->findAll();
          $adhesions = $adhesionRepository->findAll();
          $listusers[]='';
@@ -271,4 +273,13 @@ class UserController extends AbstractController
 
     //     return $this->redirectToRoute('user_index');
     // }
+
+    /**
+     * @Route("/addroles", name="user_addroles", methods={"GET","POST"})
+     */
+    public function addroles($value)
+    {
+        $roles = new ArrayCollection(['ROLE_ADHERENT', 'ROLE_TECHNIQUE', 'ROLE_SYMPATHISANT', 'ROLE_MANAGER_LYON, ROLE_ADMIN, ROLE_SUPER_ADMIN' ]);
+        $roles->add($value);
+    }
 }
