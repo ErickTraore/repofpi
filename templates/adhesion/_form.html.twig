@@ -43,6 +43,21 @@
 {{ form_errors(form.numberIdentity) }}
 </div>
 <div class="form-group">
+{{ form_label(form.voie, 'Nature de la voie') }}
+{{ form_widget(form.voie, {'attr':{'class':'form-control'}}) }}
+{{ form_errors(form.voie) }}
+</div>
+<div class="form-group">
+{{ form_label(form.novoie, 'N° de la voie') }}
+{{ form_widget(form.novoie, {'attr':{'class':'form-control'}}) }}
+{{ form_errors(form.novoie) }}
+</div>
+<div class="form-group">
+{{ form_label(form.nomvoie, 'Nom de la voie') }}
+{{ form_widget(form.nomvoie, {'attr':{'class':'form-control'}}) }}
+{{ form_errors(form.nomvoie) }}
+</div>
+<div class="form-group">
 {{ form_label(form.ville, 'Ville') }}
 {{ form_widget(form.ville, {'attr':{'class':'form-control'}}) }}
 {{ form_errors(form.ville) }}
