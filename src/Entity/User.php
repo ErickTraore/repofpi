@@ -65,7 +65,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="array")
      */
-    private $roles=[];
+    private $roles = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adhesion", cascade={"persist","remove"})
@@ -134,9 +134,14 @@ class User implements UserInterface
         return null;
     }
 
+
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = '';
+
+        return array_unique($roles);
     }
 
     public function eraseCredentials()

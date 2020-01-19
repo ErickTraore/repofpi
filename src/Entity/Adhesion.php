@@ -27,9 +27,9 @@ class Adhesion
     private $gender = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $statut = 0;
+    private $statut;
     
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -264,6 +264,18 @@ class Adhesion
         return $this;
     }
 
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?string $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
     public function getBirthday(): ?\DateTimeInterface
     {
         return $this->birthday;
@@ -276,15 +288,6 @@ class Adhesion
     public function setBirthday(?\DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
-        return $this;
-    }
-
-    public function getStatut(): bool{
-        return $this->statut;
-    }
-
-    public function setStatut(bool $statut): self{
-        $this->statut = $statut;
         return $this;
     }
 
