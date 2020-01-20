@@ -95,6 +95,30 @@ class UserController extends AbstractController
                 'adhesions' => $adhesions
                 ]);
         }
+
+                       /**
+     * @Route("/listeadmin", name="user_listeadmin")
+     */
+    public function listeadmin(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
+    {
+         $users = $userRepository->findAll();
+         $adhesions = $adhesionRepository->findAll();
+         $listusers[]='';
+        
+         foreach( $users as $user)
+         {
+            $adhesion = $user->getAdhesion();
+            $role = $user->getRoles();
+            
+            $listusers[]=$user;
+            
+             
+         }  
+         return $this->render('user/listeadmin.html.twig', [
+                'listusers' => $users,
+                'adhesions' => $adhesions
+                ]);
+        }
     
          /**
      * @Route("/paiementadherent", name="user_paiementadherent")
@@ -162,59 +186,59 @@ class UserController extends AbstractController
                 ]);
      }
         
-    /**
-     * @Route("/makeCarte", name="user_makeCarte")
-     */
-    public function makeCarte(UserRepository $userRepository, CountRepository $countRepository):Response
-    {
-        $users = $userRepository->findAll();
-        $user = $this->getUser();
-        $adhesion = $user->getAdhesion();
-        $adhesionId = $adhesion->getId();
-        $count = $countRepository->findOneByref('carte_2020');
+    // /**
+    //  * @Route("/makeCarte", name="user_makeCarte")
+    //  */
+    // public function makeCarte(UserRepository $userRepository, CountRepository $countRepository):Response
+    // {
+    //     $users = $userRepository->findAll();
+    //     $user = $this->getUser();
+    //     $adhesion = $user->getAdhesion();
+    //     $adhesionId = $adhesion->getId();
+    //     $count = $countRepository->findOneByref('carte_2020');
 
         
-        $adhesionfirstname = $adhesion->getFirstName();
-        $adhesionlastname = $adhesion->getLastname();
-        $adhesionbirthday = $adhesion->getBirthday();
-        $adhesionlieunaiss = $adhesion->getlieunaissance();
-        $adhesiongender = $adhesion->getGender();
-        $adhesionprofession = $adhesion->getProfession();
-        // $adhesionnorue = $adhesion->getNorue();
-        // $adhesionnomrue = $adhesion->getNomrue();
-        $adhesionville = $adhesion->getVille();
-        $adhesionpays = $adhesion->getPays();
-        $adhesioncodepostale = $adhesion->getCodepostale();
+    //     $adhesionfirstname = $adhesion->getFirstName();
+    //     $adhesionlastname = $adhesion->getLastname();
+    //     $adhesionbirthday = $adhesion->getBirthday();
+    //     $adhesionlieunaiss = $adhesion->getlieunaissance();
+    //     $adhesiongender = $adhesion->getGender();
+    //     $adhesionprofession = $adhesion->getProfession();
+    //     // $adhesionnorue = $adhesion->getNorue();
+    //     // $adhesionnomrue = $adhesion->getNomrue();
+    //     $adhesionville = $adhesion->getVille();
+    //     $adhesionpays = $adhesion->getPays();
+    //     $adhesioncodepostale = $adhesion->getCodepostale();
         
-        $image = $adhesion->getImage();
-        $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
-        if(!$imageId)
-        {
-        return $this->render('images/echec_vue_image.html.twig');
+    //     $image = $adhesion->getImage();
+    //     $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
+    //     if(!$imageId)
+    //     {
+    //     return $this->render('images/echec_vue_image.html.twig');
             
-        }
-        $imageimagename = $image->getImageName();
+    //     }
+    //     $imageimagename = $image->getImageName();
 
         
-        return $this->render('user/makeCarte.html.twig'
-        ,[
-            'count' => $count,
-            // 'counts' => $counts,
-            'adhesiongender'=> $adhesiongender,
-            'adhesionId' => $adhesionId,
-            'adhesionfirstname' => $adhesionfirstname,
-            'adhesionlastname' => $adhesionlastname,
-            'adhesionbirthday' => $adhesionbirthday,
-            'adhesionlieunaiss' => $adhesionlieunaiss,
-            'adhesionprofession'=> $adhesionprofession, 
-            // 'adhesionnorue'=> $adhesionnorue,
-            // 'adhesionnomrue'=> $adhesionnomrue,
-            // 'adhesionville' => $adhesionville,
-            // 'adhesionpays' => $adhesionpays,
-            // 'adhesioncodepostale' => $adhesioncodepostale,
-            // 'im' => $imageimagename
-            ]);
-    }
+    //     return $this->render('user/makeCarte.html.twig'
+    //     ,[
+    //         'count' => $count,
+    //         // 'counts' => $counts,
+    //         'adhesiongender'=> $adhesiongender,
+    //         'adhesionId' => $adhesionId,
+    //         'adhesionfirstname' => $adhesionfirstname,
+    //         'adhesionlastname' => $adhesionlastname,
+    //         'adhesionbirthday' => $adhesionbirthday,
+    //         'adhesionlieunaiss' => $adhesionlieunaiss,
+    //         'adhesionprofession'=> $adhesionprofession, 
+    //         // 'adhesionnorue'=> $adhesionnorue,
+    //         // 'adhesionnomrue'=> $adhesionnomrue,
+    //         // 'adhesionville' => $adhesionville,
+    //         // 'adhesionpays' => $adhesionpays,
+    //         // 'adhesioncodepostale' => $adhesioncodepostale,
+    //         // 'im' => $imageimagename
+    //         ]);
+    // }
 
     /**
      * @Route("/{id}/show", name="user_show", methods={"GET"})
@@ -281,18 +305,28 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    
+    /**
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
 
-    // /**
-    //  * @Route("/{id}", name="user_delete", methods={"DELETE"})
-    //  */
-    // public function delete(Request $request, User $user): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->remove($user);
-    //         $entityManager->flush();
-    //     }
-
-    //     return $this->redirectToRoute('user_index');
-    // }
+        return $this->redirectToRoute('user_index');
+    }
+    
+     /**
+     * @Route("/majroles", name="user_majroles")
+     */
+    public function majroles(UserRepository $userRepository)
+    {
+        return $this->render('user/listemajroles.html.twig',[
+            'listusers' => $userRepository->findAll()
+        ]);
+    }
 }

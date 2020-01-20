@@ -10,21 +10,16 @@
 				<h6>Représentation FPI-FRANCE</h6>        
 			</div>
 
-<caption class="well well-sm"><h2> Liste de tous les adhérents du site FPI</h2></caption>
+<caption class="well well-sm"><h2> Liste de tous les administrateurs FPI</h2></caption>
 
     <table>
-      {% dump(adhesions) %} 
-         {% dump(listusers) %}
+
       
     {% if listusers %}
-                {# <td class="well well-sm">{{ count.ref }}</td> #}
-       
-            
-    
-  
-
          {% for user in listusers  %}
-              {% if user.roles[0] == "ROLE_ADHERENT" %}
+
+                        {% if user.roles[0] == "ROLE_ADMIN" %}
+                       
             <tr>
                 <th class="well">id:</th>
                 <th class="well">Sex:</th>

@@ -10,8 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Username</th>
-                <th>Password</th>
-                <th>Date_crea</th>
+                <th>Nom</th>
+                <th>Prenom</th>
                 <th>Roles</th>
                 <th>N° Adhesion</th>
 
@@ -19,14 +19,15 @@
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
-        {{ dump(user) }}
+        {% for user in listusers %}
+        {{ dump(listusers) }}
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.dateCrea ? user.dateCrea|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.adhesion.firstname }}</td>
+                <td>{{ user.adhesion.lastname }}</td>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                <td>{{ user.adhesion.id }}</td>
                 <td>
                     <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>

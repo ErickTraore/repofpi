@@ -48,7 +48,7 @@
       <ul>
          <li><a href="{{ path('user_listetotal') }}">Liste-Total</a></li>
          <li><a href="{{ path('user_listeadherent') }}">Liste-Adherents</a></li>
-         <li><a href="{{ path('user_makeCarte') }}">Liste-Sympathisants</a></li>
+         <li><a href="{{ path('user_listeadmin') }}">Liste-Administrateurs</a></li>
          <li><a href="{{ path('user_paiementadherent') }}">Paiements adhesions</a></li>
          <li><a href="{{ path('user_paiementdon') }}">Paiements dons</a></li>
          <li><a href="{{ path('user_paiementvente') }}">Paiements ventes</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
@@ -72,7 +72,7 @@
 {% if is_granted ('ROLE_SUPER_ADMIN') %}
    <li><a href="#">Super-Admin</a>  
       <ul>
-         <li><a href="#">maj-roles</a></li>
+         <li><a href="{{ path('user_majroles') }} ">maj-roles</a></li>
       </ul>
    </li>
 {% endif %}
