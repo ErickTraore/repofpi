@@ -19,21 +19,22 @@ use Symfony\Component\Asset\Package ;
 use Symfony\Component\Asset\Packages ;
 use Symfony\Component\Asset\PathPackage ;
 use Symfony\Component\Asset\UrlPackage ;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
+ * @Route("/admin")
  */
-class UserController extends AbstractController
+class AdminController extends AbstractController
 {
-     /**
-     * @Route("/commandecarte", name="user_commandecarte")
-     */
+    /**
+    * @Route("/commandecarte", name="admin_commandecarte")
+    */
     public function commandecarte(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $counts = $countRepository->findBy([
+        $counts = $countRepository->findBy([
             'ref' => 'carte_2020'
         ]);
         $listusers[]='';
@@ -44,88 +45,78 @@ class UserController extends AbstractController
             $image = $adhesion->getImage();
             $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
         }
-            return $this->render('user/commandecarte.html.twig', [
+        return $this->render('admin/commandecarte.html.twig', [
                 'listusers' => $listusers,
                 'counts' => $counts
                 ]);
-     }  
+    }
         
-        /**
-     * @Route("/listetotal", name="user_listetotal")
+    /**
+     * @Route("/listetotal", name="admin_listetotal")
      */
     public function listetotal(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $users = $userRepository->findAll();
-         $adhesions = $adhesionRepository->findAll();
-         $listusers[]='';
+        $users = $userRepository->findAll();
+        $adhesions = $adhesionRepository->findAll();
+        $listusers[]='';
         
-         foreach( $users as $user)
-         {
+        foreach ($users as $user) {
             $adhesion = $user->getAdhesion();
             $listusers[]=$user;
-            
-             
-         }  
-         return $this->render('user/listetotal.html.twig', [
+        }
+        return $this->render('admin/listetotal.html.twig', [
                 'listusers' => $users,
                 'adhesions' => $adhesions
                 ]);
-        } 
+    }
         
-                /**
-     * @Route("/listeadherent", name="user_listeadherent")
+    /**
+     * @Route("/listeadherent", name="admin_listeadherent")
      */
     public function listeadherent(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $users = $userRepository->findAll();
-         $adhesions = $adhesionRepository->findAll();
-         $listusers[]='';
-        
-         foreach( $users as $user)
-         {
+        $users = $userRepository->findAll();
+        $adhesions = $adhesionRepository->findAll();
+        $listusers[]='';
+        foreach ($users as $user) {
             $adhesion = $user->getAdhesion();
             $role = $user->getRoles();
-            
             $listusers[]=$user;
-            
-             
-         }  
-         return $this->render('user/listeadherent.html.twig', [
+        }
+        return $this->render('admin/listeadherent.html.twig', [
                 'listusers' => $users,
                 'adhesions' => $adhesions
                 ]);
-        }
+    }
 
-                       /**
-     * @Route("/listeadmin", name="user_listeadmin")
+    /**
+     * @Route("/listeadmin", name="admin_listeadmin")
      */
     public function listeadmin(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $users = $userRepository->findAll();
-         $adhesions = $adhesionRepository->findAll();
-         $listusers[]='';
+        $user = new User();
+        $users = $userRepository->findAll();
+        $adhesions = $adhesionRepository->findAll();
+        $listusers[]='';
         
-         foreach( $users as $user)
-         {
+        foreach ($users as $user) {
             $adhesion = $user->getAdhesion();
             $role = $user->getRoles();
             
             $listusers[]=$user;
-            
-             
-         }  
-         return $this->render('user/listeadmin.html.twig', [
+        }
+        return $this->render('admin/listeadmin.html.twig', [
                 'listusers' => $users,
                 'adhesions' => $adhesions
                 ]);
-        }
+    }
     
-         /**
-     * @Route("/paiementadherent", name="user_paiementadherent")
+    /**
+     * @Route("/paiementadherent", name="admin_paiementadherent")
      */
     public function paiementadherent(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $counts = $countRepository->findBy([
+        $counts = $countRepository->findBy([
             'ref' => 'abonnement'
         ]);
         $listusers[]='';
@@ -136,18 +127,18 @@ class UserController extends AbstractController
             $image = $adhesion->getImage();
             $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
         }
-            return $this->render('user/paiementadherent.html.twig', [
+        return $this->render('admin/paiementadherent.html.twig', [
                 'listusers' => $listusers,
                 'counts' => $counts
                 ]);
-     } 
+    }
 
-              /**
-     * @Route("/paiementdon", name="user_paiementdon")
+    /**
+     * @Route("/paiementdon", name="admin_paiementdon")
      */
     public function paiementdon(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $counts = $countRepository->findBy([
+        $counts = $countRepository->findBy([
             'ref' => 'don'
         ]);
         $listusers[]='';
@@ -158,18 +149,18 @@ class UserController extends AbstractController
             $image = $adhesion->getImage();
             $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
         }
-            return $this->render('user/paiementdon.html.twig', [
+        return $this->render('admin/paiementdon.html.twig', [
                 'listusers' => $listusers,
                 'counts' => $counts
                 ]);
-     }
+    }
 
-                   /**
-     * @Route("/paiementvente", name="user_paiementvente")
+    /**
+     * @Route("/paiementvente", name="admin_paiementvente")
      */
     public function paiementvente(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
-         $counts = $countRepository->findBy([
+        $counts = $countRepository->findBy([
             'ref' => 'vente'
         ]);
         $listusers[]='';
@@ -180,89 +171,35 @@ class UserController extends AbstractController
             $image = $adhesion->getImage();
             $listusers[]=$userRepository->findOneBy(['adhesion' => $adhesionid]);
         }
-            return $this->render('user/paiementvente.html.twig', [
+        return $this->render('admin/paiementvente.html.twig', [
                 'listusers' => $listusers,
                 'counts' => $counts
                 ]);
-     }
-        
-    // /**
-    //  * @Route("/makeCarte", name="user_makeCarte")
-    //  */
-    // public function makeCarte(UserRepository $userRepository, CountRepository $countRepository):Response
-    // {
-    //     $users = $userRepository->findAll();
-    //     $user = $this->getUser();
-    //     $adhesion = $user->getAdhesion();
-    //     $adhesionId = $adhesion->getId();
-    //     $count = $countRepository->findOneByref('carte_2020');
-
-        
-    //     $adhesionfirstname = $adhesion->getFirstName();
-    //     $adhesionlastname = $adhesion->getLastname();
-    //     $adhesionbirthday = $adhesion->getBirthday();
-    //     $adhesionlieunaiss = $adhesion->getlieunaissance();
-    //     $adhesiongender = $adhesion->getGender();
-    //     $adhesionprofession = $adhesion->getProfession();
-    //     // $adhesionnorue = $adhesion->getNorue();
-    //     // $adhesionnomrue = $adhesion->getNomrue();
-    //     $adhesionville = $adhesion->getVille();
-    //     $adhesionpays = $adhesion->getPays();
-    //     $adhesioncodepostale = $adhesion->getCodepostale();
-        
-    //     $image = $adhesion->getImage();
-    //     $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
-    //     if(!$imageId)
-    //     {
-    //     return $this->render('images/echec_vue_image.html.twig');
-            
-    //     }
-    //     $imageimagename = $image->getImageName();
-
-        
-    //     return $this->render('user/makeCarte.html.twig'
-    //     ,[
-    //         'count' => $count,
-    //         // 'counts' => $counts,
-    //         'adhesiongender'=> $adhesiongender,
-    //         'adhesionId' => $adhesionId,
-    //         'adhesionfirstname' => $adhesionfirstname,
-    //         'adhesionlastname' => $adhesionlastname,
-    //         'adhesionbirthday' => $adhesionbirthday,
-    //         'adhesionlieunaiss' => $adhesionlieunaiss,
-    //         'adhesionprofession'=> $adhesionprofession, 
-    //         // 'adhesionnorue'=> $adhesionnorue,
-    //         // 'adhesionnomrue'=> $adhesionnomrue,
-    //         // 'adhesionville' => $adhesionville,
-    //         // 'adhesionpays' => $adhesionpays,
-    //         // 'adhesioncodepostale' => $adhesioncodepostale,
-    //         // 'im' => $imageimagename
-    //         ]);
-    // }
+    }
 
     /**
-     * @Route("/{id}/show", name="user_show", methods={"GET"})
+     * @Route("/{id}/show", name="admin_show", methods={"GET"})
      */
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('admin/show.html.twig', [
             'user' => $user,
         ]);
     }
 
-     /**
-     * @Route("/index", name="user_index", methods={"GET"})
-     */
+    /**
+    * @Route("/index", name="admin_index", methods={"GET"})
+    */
     public function index(UserRepository $userRepository, AdhesionRepository $adhesionRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('admin/index.html.twig', [
             'users' => $userRepository->findAll(),
             'adhesions' => $adhesionRepository->findAll()
         ]);
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/new", name="admin_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -275,10 +212,10 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('admin_index');
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('admin_/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -287,7 +224,7 @@ class UserController extends AbstractController
   
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="admin_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user): Response
     {
@@ -297,17 +234,19 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRoute('admin_index');
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('admin/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
     }
     
+
+
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="admin_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {
@@ -317,16 +256,8 @@ class UserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin__index');
     }
-    
-     /**
-     * @Route("/majroles", name="user_majroles")
-     */
-    public function majroles(UserRepository $userRepository)
-    {
-        return $this->render('user/listemajroles.html.twig',[
-            'listusers' => $userRepository->findAll()
-        ]);
-    }
+  
+
 }

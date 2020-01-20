@@ -46,12 +46,12 @@
 
    <li><a href="#">Tableau Admin</a>  
       <ul>
-         <li><a href="{{ path('user_listetotal') }}">Liste-Total</a></li>
-         <li><a href="{{ path('user_listeadherent') }}">Liste-Adherents</a></li>
-         <li><a href="{{ path('user_listeadmin') }}">Liste-Administrateurs</a></li>
-         <li><a href="{{ path('user_paiementadherent') }}">Paiements adhesions</a></li>
-         <li><a href="{{ path('user_paiementdon') }}">Paiements dons</a></li>
-         <li><a href="{{ path('user_paiementvente') }}">Paiements ventes</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
+         <li><a href="{{ path('admin_listetotal') }}">Liste-Total</a></li>
+         <li><a href="{{ path('admin_listeadherent') }}">Liste-Adherents</a></li>
+         <li><a href="{{ path('admin_listeadmin') }}">Liste-Administrateurs</a></li>
+         <li><a href="{{ path('admin_paiementadherent') }}">Paiements adhesions</a></li>
+         <li><a href="{{ path('admin_paiementdon') }}">Paiements dons</a></li>
+         <li><a href="{{ path('admin_paiementvente') }}">Paiements ventes</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
       </ul>
    </li>
 {% endif %}
@@ -59,7 +59,7 @@
 {% if is_granted ('ROLE_TECHNIQUE') %}
      <li><a href="#">Tableau Technique</a>  
       <ul>
-         <li><a href="{{ path('user_commandecarte') }}">Liste-Cde-carte</a></li>
+         <li><a href="{{ path('admin_commandecarte') }}">Liste-Cde-carte</a></li>
       </ul>
    </li>
 {% endif %}
@@ -72,7 +72,8 @@
 {% if is_granted ('ROLE_SUPER_ADMIN') %}
    <li><a href="#">Super-Admin</a>  
       <ul>
-         <li><a href="{{ path('user_majroles') }} ">maj-roles</a></li>
+      {# {{ path('admin_majroles') }} #}
+         <li><a href="#">Affecter un role</a></li>
       </ul>
    </li>
 {% endif %}

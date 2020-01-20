@@ -76,7 +76,6 @@ class IndexController extends AbstractController
                 ->getForm();
          $form->handleRequest($request);
          if ($form->isSubmitted()) {
-             
                     if ($user) {
                             return $this->redirectToRoute('forgetpassafter', [
                             'user' => $user,
