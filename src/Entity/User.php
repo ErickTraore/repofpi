@@ -73,6 +73,16 @@ class User implements UserInterface
     private $adhesion;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date_signat;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $signature;
+
+    /**
      *  @return mixed
      */
     public function getId()
@@ -195,4 +205,34 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Get dateCrea
+     *
+     * @return \DATETIME
+     */
+    public function getDateSignat(): ?\DateTimeInterface
+    {
+        return $this->date_signat;
     }
+
+    public function setDateSignat(?\DateTimeInterface $dateSignat): self
+    {
+        $this->date_signat = $dateSignat;
+
+        return $this;
+    }
+
+    public function getSignature(): ?string
+    {
+        return $this->signature;
+    }
+
+    public function setSignature(string $signature): self
+    {
+        $this->signature = $signature;
+
+        return $this;
+    }
+
+    }
+  

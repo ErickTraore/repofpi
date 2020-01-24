@@ -10,10 +10,12 @@ use App\Entity\Adhesion;
 use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Form\UserType;
+use App\Repository\AdhesionRepository;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormTypeInterface;
@@ -23,7 +25,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use symfony\Component\Form\Extension\Core\Type\HiddenType;
 
   
 class IndexController extends AbstractController
@@ -107,60 +108,28 @@ class IndexController extends AbstractController
         $numrand =  rand (1000, 9999);
         $pass = $numrand ;
         $pass_hash = password_hash($pass, PASSWORD_BCRYPT);
-        if (password_verify($pass, $pass_hash))
-        {
-          $testrand = "fpiinscription.com Votre Mot de passe provisoire est: $pass";
-          $user->setPassword($pass_hash);
-          $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->flush();
+        if (password_verify($pass, $pass_hash)) {
+            $testrand = "fpiinscription.com Votre Mot de passe provisoire est: $pass";
+            $user->setPassword($pass_hash);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
 //        debut sms
-        $username = $user->getUsername();
-        $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
-        $message_inscription = $testrand;
-        //vérouillage ou dévérouillage des envois sms grace à $insertisok
-        $insertisok = false;
-        if ($insertisok) {
-
-                                // CapitoleMobile POST URL
-        $postUrl = "https://sms.capitolemobile.com/api/sendsms/xml.php";
-        //Structure de Données XML
-        $xmlString = '<SMS>
-                                                <authentification>
-                                                        <username>0778343941</username>
-                                                        <password>Erick2691</password>
-                                                </authentification>
-                                                    <message>
-                                                            <long>yes</long>
-                                                            <text> '.$message_inscription.' </text>
-                                                            <sender>FPI FRANCE</sender>
-                                                    </message>
-                                                <recipients>
-                                                        <gsm>'.$username.'</gsm>
-                                                </recipients>
-                                        </SMS>';
-                // insertion du nom de la variable POST "XML" avant les données au format XML
-                $fields = "XML=" . urlencode(utf8_encode($xmlString));
-                // dans cet exemple, la requête POST est realisée grâce à la librairie Curl
-                $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, $postUrl);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-                // Réponse de la requête POST
-                $response = curl_exec($ch);
-                curl_close($ch);
-                // Ecriture de la réponse
-                echo $response;
-                $insertisok = false;
+            $username = $user->getUsername();
+            $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
+            $message_inscription = $testrand;
+            //vérouillage ou dévérouillage des envois sms grace à $insertisok
+            // $insertisok = false;
+            $insertisok = true;
+            if ($insertisok) {
+                return $this->redirectToRoute('envoiesms_departsms',[
+                    'number_phone' => $username,
+                    'message_phone' => $testrand
+                ]);
             }
-          
-          return $this->render('security2/forgetpassafter.html.twig', [
-              'numrand'=> $numrand,
-              'numhash'=> $pass_hash,
-              'testrand'=> $testrand,
-              ]);
+            else{
+                return $this->render('page_erreurr_sms.html.twig');
+            }
         }
-        return $this->redirectToRoute('forgetpass');
-
         
     } 
     
@@ -168,6 +137,7 @@ class IndexController extends AbstractController
      * @Route("/editecheance/{adhesionId}",name="echeance", methods={"GET","POST"})
      * @param Request            $request
      * @param UserRepository $repository
+     * 
      * @return Response
      */   
 public function editecheance(Request $request, $adhesionId):Response
@@ -198,12 +168,170 @@ public function editecheance(Request $request, $adhesionId):Response
 
   return new Response('OK');
 }
-}
-        
-    
-    
-    
-    
- 
 
-  
+     /**
+     * 
+     * @Route("/signature", name="signature")
+     */
+    public function signature(Request $request)
+   //  public function forgetpass(Request $request, ObjectManager $manager)
+    {
+        $user = new User();
+        $user = $this->getUser();
+        $datesignat=$user->getDatesignat();
+        if (empty($datesignat)) {
+            $form = $this->createFormBuilder($user)
+                ->add('save', SubmitType::class, ['label' => 'Signature'])
+                ->getForm();
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                if ($user) {
+                    return $this->redirectToRoute('signatureafter', [
+                            'user' => $user,
+                            'myusername' => $user->getUsername(),
+                            ]);
+                }
+            }
+            return $this->render('security2/signature.html.twig', [
+            'formUser' =>$form->createView(),
+        ]);
+        }
+        else {return $this->render('security2/signatureko.html.twig');}
+    }
+    /**
+     * 
+     * @Route("/signatureafter/{myusername}", name="signatureafter")
+     */
+    public function signatureafter(Request $request, $myusername):Response
+    {
+        $repository = $this->getDoctrine()
+                   ->getManager()
+                   ->getRepository(User::class);
+        $user = $this->repository->findOneBy(array('username' => $myusername));
+
+        if (! $user) {
+            return $this->redirectToRoute('forgetpass');
+        }
+        $insertisok = false;
+        $numrand =  rand (1000, 9999);
+        $pass = $numrand ;
+        // $pass_hash = password_hash($pass, PASSWORD_BCRYPT);
+        // if (password_verify($pass, $pass_hash)) {
+            $testrand = "fpiinscription.com  Votre Code de signature est: $pass";
+            $user->setSignature($pass);
+            // $user->setDateSignat(new \DateTime('now'));
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+        //   debut sms
+            $username = $user->getUsername();
+            $request->getSession()->getFlashBag()->add('notice', 'Inscription bien enregistrée.');
+            $message_inscription = $testrand;
+            //vérouillage ou dévérouillage des envois sms grace à $insertisok
+            // $insertisok = false;
+            $insertisok = true;
+            if ($insertisok) {
+                return $this->redirectToRoute('envoiesms_signaturesms',[
+                    'number_phone' => $username,
+                    'message_phone' => $testrand,
+                    'pass' => $numrand 
+                ]);
+            }
+            else{
+                return $this->render('page_erreurr_sms.html.twig');
+            }
+        
+        
+    } 
+
+
+    /**
+     * 
+     * @Route("/signaturetripleafter", name="signaturetripleafter")
+     */
+    public function signaturetripleafter(Request $request)
+    { 
+        
+         $user = new User();
+         $usertest = $this->getUser();
+         $signatureold = $usertest->getSignature();
+        //  var_dump($signatureold);
+         $form = $this->createFormBuilder($user)
+                ->add('username',HiddenType::class) 
+                ->add('signature') 
+                ->add('save',SubmitType::class, ['label' => 'Envoyer'])
+                ->getForm();
+         $form->handleRequest($request);
+         if ($form->isSubmitted()) {
+            $signaturenew=$user->getSignature();
+        // var_dump($signaturenew);
+            if($signatureold==$signaturenew){
+                $user=$this->getUser();
+                $user->setDateSignat(new \DateTime('now'));
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+                return $this->render('security2/finsignaturesms.html.twig');
+                 }
+            //  }
+         }
+    return $this->render('security2/signaturetripleafter.html.twig', [
+        'formUser' =>$form->createView(),
+    ]); 
+    }
+
+    /**
+     * 
+     * @Route("/rolemodification", name="rolemodification")
+     */
+    public function rolemodification(Request $request, UserRepository $userRepository, AdhesionRepository $adhesionRepository)
+    { 
+        $users = $userRepository->findAll();
+        $adhesions = $adhesionRepository->findAll();
+        $listusers[]='';
+        
+        foreach ($users as $user) {
+            $adhesion = $user->getAdhesion();
+            $listusers[]=$user;
+        }
+        return $this->render('security2/roleselectuser.html.twig', [
+                'listusers' => $users,
+                'adhesions' => $adhesions
+                ]);
+        
+
+    }
+       /**
+     * 
+     * @Route("/rolemodifdeux", name="rolemodifdeux")
+     */
+    public function rolemodifdeux(Request $request)
+    { 
+        
+         $user = new User();
+         $usertest = $this->getUser();
+        //  $signatureold = $usertest->getSignature();
+        //  var_dump($signatureold);
+         $form = $this->createFormBuilder($user)
+                ->add('username') 
+                ->add('save',SubmitType::class, ['label' => 'Envoyer'])
+                ->getForm();
+         $form->handleRequest($request);
+         if ($form->isSubmitted()) {
+            $signaturenew=$user->getSignature();
+        var_dump($username);
+            if($signatureold==$signaturenew){
+                $user=$this->getUser();
+                $user->setDateSignat(new \DateTime('now'));
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+                return $this->render('security2/finsignaturesms.html.twig');
+                 }
+            //  }
+         }
+    return $this->render('security2/rolemodifdeux.html.twig', [
+        'formUser' =>$form->createView(),
+    ]); 
+    }
+    
+    }
+        

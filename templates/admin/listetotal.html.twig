@@ -27,22 +27,16 @@
                 <th class="well">Naissance </th>
                 <th class="well">lieu naiss </th>
                 <th class="well">Profession </th>
-                <th class="well">N° rue </th>
-                <th class="well">Nom rue </th>
+                 <th class="well">voie </th>
+                <th class="well">N° voie </th>
+                <th class="well">Nom voie </th>
                 <th class="well">Nom ville </th>
                 <th class="well">Nom pays </th>
                 <th class="well">code postale </th>
                 <th class="well">Photo </th>
             </tr>
-            
-         {% dump(listusers) %} 
-  
-
          {% for user in listusers  %}
-         {# {% dump(user.id) %}  #}
-
          <tr> 
-         {# {{ user.id }} #}
                 <td class="well well-sm">{{ user.id | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.gender | default("") }}</td>
                 <td class="well well-sm">{{ user.username  | default("") }}</td>
@@ -52,29 +46,21 @@
                 <td class="well well-sm">{{ user.adhesion.birthday | default("") | date('d-m-Y')  }}</td>
                 <td class="well well-sm">{{ user.adhesion.lieunaissance  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.profession  | default("") }}</td>
-                <td class="well well-sm">{{ user.adhesion.norue  | default("") }}</td>
-                <td class="well well-sm">{{ user.adhesion.nomrue  | default("") }}</td>
+              <td class="well well-sm">{{ user.adhesion.voie  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.novoie  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.nomvoie  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.ville  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.pays  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.codepostale  | default("") }}</td>
-                {# <td class="well well-sm">{{ user.adhesion.image.id | default("") }}</td> #}
-            {# <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ user.adhesion.image) }}' #}
-
                 <td> <img style="margin:15px" width="120" src='{{ asset('assets/images/' ~ user.adhesion.image | default("")) }}'></td>
-
          </tr>
          {% endfor %}
-
-
-           
     {% else %}
    Aucune personne ne s'est enregistré sur le site.
 {% endif %}
-         
     </table>  
 </u>
 </div>
 <a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
-
 </div>
 {% endblock %} 

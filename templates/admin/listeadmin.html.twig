@@ -11,14 +11,10 @@
 			</div>
 
 <caption class="well well-sm"><h2> Liste de tous les administrateurs FPI</h2></caption>
-
     <table>
-
-      
     {% if listusers %}
          {% for user in listusers  %}
-
-                        {% if user.roles[0] == "ROLE_ADMIN" %}
+             {% if user.roles[0] == "ROLE_ADMIN" %}
                        
             <tr>
                 <th class="well">id:</th>
@@ -30,8 +26,9 @@
                 <th class="well">Naissance </th>
                 <th class="well">lieu naiss </th>
                 <th class="well">Profession </th>
-                <th class="well">N° rue </th>
-                <th class="well">Nom rue </th>
+                <th class="well">voie </th>
+                <th class="well">N° voie </th>
+                <th class="well">Nom voie </th>
                 <th class="well">Nom ville </th>
                 <th class="well">Nom pays </th>
                 <th class="well">code postale </th>
@@ -49,8 +46,9 @@
                 <td class="well well-sm">{{ user.adhesion.birthday | default("") | date('d-m-Y')  }}</td>
                 <td class="well well-sm">{{ user.adhesion.lieunaissance  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.profession  | default("") }}</td>
-                <td class="well well-sm">{{ user.adhesion.norue  | default("") }}</td>
-                <td class="well well-sm">{{ user.adhesion.nomrue  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.voie  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.novoie  | default("") }}</td>
+                <td class="well well-sm">{{ user.adhesion.nomvoie  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.ville  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.pays  | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.codepostale  | default("") }}</td>
@@ -71,11 +69,9 @@
     {% else %}
    Aucune personne ne s'est enregistré sur le site.
 {% endif %}
-         
     </table>  
 </u>
 </div>
 <a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
-
 </div>
 {% endblock %} 

@@ -73,8 +73,9 @@ class AdminController extends AbstractController
     /**
      * @Route("/listeadherent", name="admin_listeadherent")
      */
-    public function listeadherent(CountRepository $countRepository, AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
+    public function listeadherent(AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
     {
+        $user = new User();
         $users = $userRepository->findAll();
         $adhesions = $adhesionRepository->findAll();
         $listusers[]='';
@@ -84,7 +85,7 @@ class AdminController extends AbstractController
             $listusers[]=$user;
         }
         return $this->render('admin/listeadherent.html.twig', [
-                'listusers' => $users,
+                'listusers' => $listusers,
                 'adhesions' => $adhesions
                 ]);
     }
@@ -107,6 +108,26 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/listeadmin.html.twig', [
                 'listusers' => $users,
+                'adhesions' => $adhesions
+                ]);
+    }
+
+       /**
+     * @Route("/listesuperadmin", name="admin_listesuperadmin")
+     */
+    public function listesuperadmin(AdhesionRepository $adhesionRepository, UserRepository $userRepository, ImageRepository $mageRepository):Response
+    {
+        $user = new User();
+        $users = $userRepository->findAll();
+        $adhesions = $adhesionRepository->findAll();
+        $listusers[]='';
+        foreach ($users as $user) {
+            $adhesion = $user->getAdhesion();
+            $role = $user->getRoles();
+            $listusers[]=$user;
+        }
+        return $this->render('admin/listesuperadmin.html.twig', [
+                'listusers' => $listusers,
                 'adhesions' => $adhesions
                 ]);
     }

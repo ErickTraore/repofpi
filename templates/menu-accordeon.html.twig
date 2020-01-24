@@ -29,6 +29,7 @@
          <li><a href="{{ path('cotisation_formPaiement') }}">Mensuelle/annuel</a></li>
          <li><a href="{{ path('cotisation_formdon') }}">Dons</a></li>
          <li><a href="{{ path('count_attestation') }}">Attestation de paiement</a></li>
+         <li><a href="{{ path('signature') }}">Signature electronique</a></li>
       </ul>
    </li>
          {% endif %}
@@ -49,6 +50,7 @@
          <li><a href="{{ path('admin_listetotal') }}">Liste-Total</a></li>
          <li><a href="{{ path('admin_listeadherent') }}">Liste-Adherents</a></li>
          <li><a href="{{ path('admin_listeadmin') }}">Liste-Administrateurs</a></li>
+         <li><a href="{{ path('admin_listesuperadmin') }}">Liste-Super_Admin</a></li>
          <li><a href="{{ path('admin_paiementadherent') }}">Paiements adhesions</a></li>
          <li><a href="{{ path('admin_paiementdon') }}">Paiements dons</a></li>
          <li><a href="{{ path('admin_paiementvente') }}">Paiements ventes</a></li>{# <li><a href="{{ path('envoiesms_general') }}">Communications</a></li> #}
@@ -72,8 +74,12 @@
 {% if is_granted ('ROLE_SUPER_ADMIN') %}
    <li><a href="#">Super-Admin</a>  
       <ul>
+      
       {# {{ path('admin_majroles') }} #}
-         <li><a href="#">Affecter un role</a></li>
+         <li><a href="{{ path('rolemodification') }}">test 1 role</a></li>
+         <li><a href="{{ path('rolemodifdeux') }}">test 2 role</a></li>
+         <li><a href="{{ path('envoiesms_lwssmssignature') }}">Test SMS LWS</a></li>
+         <li><a href="{{ path('envoiesms_smspartnersignature') }}">Test smspartner</a></li>
       </ul>
    </li>
 {% endif %}
