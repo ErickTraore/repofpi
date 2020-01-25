@@ -2,12 +2,8 @@
 
 namespace App\Controller;
 
-use App\Controller\FpilyonController;
-use App\Entity\Fpilyon;
 use App\Entity\SMSPartnerAPI;
 use App\Entity\User;
-use App\Form\FpilyonType;
-use App\Repository\FpilyonRepository;
 use App\Repository\UserRepository;
 use App\src\Fichiers\Departsms;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,22 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class EnvoiesmsController extends AbstractController
 {
 
-     /**
-     * @var FpilyonRepository
-     */
-    private $repository;
+     
     
    /**
     * @var EntityManagerInterface $em 
     */
     private $em;
-    
-     public function __construct(FpilyonRepository $repository, EntityManagerInterface $em)
-     {
-        $this->repository = $repository;
-        $this->em = $em;
-     }
-
+  
       /**
      * @Route("/sympathisant/{number_phone}/{message_phone}", name="envoiesms_sympathisant")
      */
