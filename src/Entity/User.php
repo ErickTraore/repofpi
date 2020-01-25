@@ -145,13 +145,10 @@ class User implements UserInterface
     }
 
 
-    public function getRoles()
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+    public function getRoles(): array   {
+        $roles = $this->roles;    
         $roles[] = '';
-
-        return array_unique($roles);
+  return array_unique($roles); 
     }
 
     public function eraseCredentials()

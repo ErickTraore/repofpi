@@ -15,6 +15,8 @@ use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormError;
@@ -279,59 +281,100 @@ public function editecheance(Request $request, $adhesionId):Response
     ]); 
     }
 
-    /**
-     * 
-     * @Route("/rolemodification", name="rolemodification")
-     */
-    public function rolemodification(Request $request, UserRepository $userRepository, AdhesionRepository $adhesionRepository)
-    { 
-        $users = $userRepository->findAll();
-        $adhesions = $adhesionRepository->findAll();
-        $listusers[]='';
-        
-        foreach ($users as $user) {
-            $adhesion = $user->getAdhesion();
-            $listusers[]=$user;
-        }
-        return $this->render('security2/roleselectuser.html.twig', [
-                'listusers' => $users,
-                'adhesions' => $adhesions
-                ]);
-        
-
-    }
+ 
        /**
      * 
-     * @Route("/rolemodifdeux", name="rolemodifdeux")
+     * @Route("/rolemodifun", name="rolemodifun")
      */
-    public function rolemodifdeux(Request $request)
+    public function rolemodifun(Request $request, UserRepository $userRepository)
     { 
         
          $user = new User();
-         $usertest = $this->getUser();
-        //  $signatureold = $usertest->getSignature();
-        //  var_dump($signatureold);
+         $listeUsers=$userRepository->findAll();
+
          $form = $this->createFormBuilder($user)
-                ->add('username') 
+                ->add('username')
+                ->add('roles', ChoiceType::class, [
+                    'choices' => [
+                        'Sympathisant' => 'ROLE_SYMPATHISANT',
+                        'Technique' => 'ROLE_TECHNIQUE',
+                        'Admin' => 'ROLE_ADMIN',
+                        'Superadmin' => 'ROLE_SUPER_ADMIN',
+                    ],
+                    'expanded'  => false, // liste déroulante
+                    'multiple'  => true, // choix multiple
+                ])
                 ->add('save',SubmitType::class, ['label' => 'Envoyer'])
                 ->getForm();
          $form->handleRequest($request);
          if ($form->isSubmitted()) {
-            $signaturenew=$user->getSignature();
-        var_dump($username);
-            if($signatureold==$signaturenew){
-                $user=$this->getUser();
-                $user->setDateSignat(new \DateTime('now'));
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->flush();
-                return $this->render('security2/finsignaturesms.html.twig');
-                 }
-            //  }
-         }
-    return $this->render('security2/rolemodifdeux.html.twig', [
-        'formUser' =>$form->createView(),
-    ]); 
+                                $username=$user->getUsername();
+                                $roles=$user->getRoles();
+                                $user = $userRepository->findOneBy(array('username' => $username));
+                                if(empty($user)){
+                                    return $this->render('security2/rolemodifunv1.html.twig', [
+                                        'formUser' => $form->createView(),
+                                        'message_securiry2' => "ATTENTION: Votre identifiant est invalide"
+                                        ]);
+                                }
+                                // return $this->redirectToRoute('rolemodifdeux',[
+                                // 'id' => $user->getId(),
+                                // 'selectrole' => $selectrole,
+                                //  ]);
+
+                                
+                                 $user->setRoles($roles);
+                                 $entityManager = $this->getDoctrine()->getManager();
+                                 $entityManager->flush();
+                                 return $this->render('security2/rolemodiftroisv3.html.twig',[
+                                    'formUser' => $form->createView(),
+                                     'user' => $user,
+                                 ]);
+                            }
+return $this->render('security2/rolemodifunv1.html.twig', [
+'formUser' => $form->createView(),
+]); 
+}
+
+   /**
+     * 
+     * @Route("/{id}/{selectrole}/rolemodifdeux", name="rolemodifdeux")
+     */
+    public function rolemodifdeux(Request $request, User $user, $selectrole)
+    {
+        $user->setRoles(array('ROLE_PERSONNE'));
+                            $entityManager = $this->getDoctrine()->getManager();
+                            $entityManager->flush();
+                            return $this->render('security2/rolemodiftroisv3.html.twig',[
+                                'user' => $user,
+                            ]); 
+        
     }
-    
+
+/**
+* 
+* @Route("/{id}/rolemodiftrois", name="rolemodiftrois")
+*/
+public function rolemodiftrois(Request $request, User $user)
+{ 
+    $form = $this->createFormBuilder($user)
+    ->add('username') 
+    ->add('save',SubmitType::class, ['label' => 'Envoyer'])
+    ->getForm();
+    $form->handleRequest($request);
+                        if ($form->isSubmitted()) {
+                            $user->setRoles(array('ROLE_TECHNIQUE'));
+                            $entityManager = $this->getDoctrine()->getManager();
+                            $entityManager->flush();
+                            return $this->render('security2/rolemodiftroisv3.html.twig',[
+                                'user' => $user,
+                            ]); 
+                            }
+                        
+    return $this->render('security2/rolemodifdeuxv1.html.twig', [
+            'formUser' =>$form->createView(),
+            ]); 
+            }
+                
     }
         
