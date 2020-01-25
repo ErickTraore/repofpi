@@ -222,17 +222,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSignature(): ?string
-    {
-        return $this->signature;
-    }
-
-    public function setSignature(string $signature): self
-    {
-        $this->signature = $signature;
-
-        return $this;
-    }
+  
 
     }
   
