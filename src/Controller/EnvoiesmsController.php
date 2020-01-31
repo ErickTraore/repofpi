@@ -62,7 +62,7 @@ return $this->render('page_erreurr_sms.html.twig');
                     "apiKey"=>"5b3b53fe23b06156697ba0e227bc37cff4906e33",
                     "phoneNumbers"=>$number_phone,
                     "message"=>$message_phone,
-                    "sender" => "FPI FRANCE",
+                    "sender" => "FPI France",
                 );
                 $result = $smspartner->sendSms($fields);
               
@@ -87,7 +87,7 @@ return $this->render('page_erreurr_sms.html.twig');
                     "apiKey"=>"5b3b53fe23b06156697ba0e227bc37cff4906e33",
                     "phoneNumbers"=>$number_phone,
                     "message"=>$message_phone,
-                    "sender" => "FPI FRANCE",
+                    "sender" => "FPI Lyon",
                 );
                 $result = $smspartner->sendSms($fields); 
               
@@ -113,7 +113,7 @@ return $this->render('page_erreurr_sms.html.twig');
                     // "phoneNumbers"=>"",
                     "message"=>$message_phone,
                     "sender" => "FPI FRANCE",
-                    "sender" => "ECHEC",
+                    "sender" => "FPI Lyon",
                 );
                 $result = $smspartner->sendSms($fields);
               
@@ -197,7 +197,7 @@ return $this->render('page_erreurr_sms.html.twig');
             "apiKey"=>"5b3b53fe23b06156697ba0e227bc37cff4906e33",
             "phoneNumbers"=>"0033778351871",
             "message"=>"coucou toi 10H56 PARTNER",
-            "sender" => "FPI FRANCE",
+            "sender" => "FPI Lyon",
         //     "scheduledDeliveryDate"=>"21/12/2014",
         //     "time"=>11,
         //     "minute"=>0

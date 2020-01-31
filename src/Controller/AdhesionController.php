@@ -319,29 +319,22 @@ class AdhesionController extends AbstractController
         $image = $adhesion->getImage();
         $imageName = $adhesion->getImage() ? $adhesion->getImage()->getImageName() : null;
        // $imageName = $image->getImageName();
-       if($imageName){
-        $image->setImageName(''); //supression nom du fichier dans bdd
-        unlink($this->getParameter('image_directory').'/'. $imageName); // suppression fichier 
-        $this->getDoctrine()->getManager()->flush();  
-       }
       
-    //   $entityManager = $this->getDoctrine()->getManager();
-    //   $entityManager->remove($image);
-    //   $entityManager->flush();
-        $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
       
         $image = new Image();
         $form = $this->createForm(ImageType::class, $image);
           
         $form->handleRequest($request);
         
-        // if ($form->get('Annuler')->isClicked()) {
-        //     return $this->redirectToRoute('home');
-        // }
-        
         if ($form->isSubmitted() && $form->isValid()) {
+            if($imageName){
+                $image->setImageName(''); //supression nom du fichier dans bdd
+                unlink($this->getParameter('image_directory').'/'. $imageName); // suppression fichier 
+                $this->getDoctrine()->getManager()->flush();  
+               }
             
-
+                $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
+                
             /**
              *@var UploadedFile $imageFile
              */

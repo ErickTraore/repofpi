@@ -78,14 +78,15 @@ class AdminController extends AbstractController
         $user = new User();
         $users = $userRepository->findAll();
         $adhesions = $adhesionRepository->findAll();
-        $listusers[]='';
-        foreach ($users as $user) {
-            $adhesion = $user->getAdhesion();
-            $role = $user->getRoles();
-            $listusers[]=$user;
-        }
+        // $listusers[]='';
+        // foreach ($users as $user) {
+        //     $adhesion = $user->getAdhesion();
+        //     $role = $user->getRoles();
+        //     $listusers[]=$user;
+        // }
         return $this->render('admin/listeadherent.html.twig', [
-                'listusers' => $listusers,
+            // 'listusers' => $listusers,
+            'listusers' => $users,
                 'adhesions' => $adhesions
                 ]);
     }
@@ -120,14 +121,15 @@ class AdminController extends AbstractController
         $user = new User();
         $users = $userRepository->findAll();
         $adhesions = $adhesionRepository->findAll();
-        $listusers[]='';
-        foreach ($users as $user) {
-            $adhesion = $user->getAdhesion();
-            $role = $user->getRoles();
-            $listusers[]=$user;
-        }
+        // $listusers[]='';
+        // foreach ($users as $user) {
+        //     $adhesion = $user->getAdhesion();
+        //     $role = $user->getRoles();
+        //     $listusers[]=$user;
+        // }
         return $this->render('admin/listesuperadmin.html.twig', [
-                'listusers' => $listusers,
+            'listusers' => $users,
+            // 'listusers' => $listusers,
                 'adhesions' => $adhesions
                 ]);
     }
