@@ -24,6 +24,11 @@
          <li><a href="{{ path('signature') }}">Signature electronique</a></li>
       </ul>
    </li>
+      <li><a href="#">Documents FPI</a>
+      <ul>
+         <li><a href="{{ path('product_index') }}">Textes statutaires</a></li>
+      </ul>
+   </li>
 	<li><a href="#">Cotisations</a>
       <ul>
          <li><a href="{{ path('cotisation_formCarte') }}">Paiement Carte Adhesion</a></li>
@@ -77,6 +82,7 @@
       
       {# {{ path('admin_majroles') }} #}
          <li><a href="{{ path('rolemodifun') }}">Modif roles</a></li>
+         <li><a href="{{ path('product_new') }}">Insertion Document</a></li>
          <li><a href="{{ path('envoiesms_lwssmssignature') }}">Test SMS LWS</a></li>
          <li><a href="{{ path('envoiesms_smspartnersignature') }}">Test smspartner</a></li>
       </ul>

@@ -39,7 +39,7 @@
       <nav class="navbar navbar-inverse">
 				<div class="container-fluid">
 				  <ul class="nav navbar-nav">
-					  <li><a href="{{'/'}}"><p><h4><span class="label label-info">Accueil</span></h4></p></a> </li>
+					  <li><a href="{{ path('home') }}"><p><h4><span class="label label-info">Accueil</span></h4></p></a> </li>
 						<li><a href="#"><p><h4><span class="label label-info">Front Populaire Ivoirien</span></h4></p></a> </li>
 					{# Si un user existe alors présentez deconnexion, si non présentez connexion #}
           {% if is_granted('ROLE_SYMPATHISANT') %}
