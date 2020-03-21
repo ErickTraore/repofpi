@@ -11,11 +11,7 @@
 			</div>
 <caption class="well well-sm"><h2> Liste des super administrateurs du site FPI</h2></caption>
     <table>
-    {% if listusers %}
-         {% for user in listusers  %}
-              {# {% if user.roles[0] == "ROLE_ADHERENT" %} #}
-              {% if user.roles[0] == "ROLE_SUPER_ADMIN" %}
-            <tr>
+       <tr>
                 <th class="well">id:</th>
                 <th class="well">Sex:</th>
                 <th class="well">N°Tel:</th>
@@ -33,6 +29,11 @@
                 <th class="well">code postale </th>
                 <th class="well">Photo </th>
             </tr>
+    {% if listusers %}
+         {% for user in listusers  %}
+              {# {% if user.roles[0] == "ROLE_ADHERENT" %} #}
+              {% if user.roles[0] == "ROLE_SUPER_ADMIN" %}
+         
          <tr>
                 <td class="well well-sm">{{ user.id | default("") }}</td>
                 <td class="well well-sm">{{ user.adhesion.gender | default("") }}</td>

@@ -306,6 +306,30 @@ class AdhesionController extends AbstractController
       }
 
       /**
+       * @Route("/impression", name="adhesion_impression", methods={"GET","POST"})
+       */
+      public function impression(Request $request, ImageRepository $repository)
+      {
+            $user = $this->getUser();
+            $adhesion = $user->getAdhesion();
+            $image = $adhesion->getImage();
+            $imageId=$adhesion->getImage() ? $adhesion->getImage()->getId() : null;
+            if(!$imageId)
+            {
+            return $this->render('images/echec_vue_image.html.twig');
+                
+            }
+            $imageimagename = $image->getImageName();
+           // $data = base64_encode($imageFile);
+
+            return $this->render('images/impression.html.twig',[
+                'im' => $imageimagename,
+                'user' => $this->getUser(),
+                'adhesion' => $adhesion,
+            ]);
+      }
+
+      /**
        * @Route("/newUpload", name="adhesion_newUpload", methods={"GET","POST"})
        */
       public function newUpload(Request $request, ImageRepository $repository)

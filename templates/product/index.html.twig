@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Document index{% endblock %}
+{% block title %}Document politique{% endblock %}
 
 {% block body %}
     <h1>Documents politiques</h1>
 
-    <table class="table">
+    <table class="table my-class">
         <thead>
             <tr>
                 <th>Date origine</th>
@@ -14,7 +14,6 @@
                 <th>Télécharger</th>
             </tr>
         </thead>
-		<li><a href="{{ '/' }}"><p><h4><span class="label label-info">Retour </span></h4></p></a> </li>
 
         <tbody>
         {% for product in products %}
@@ -35,6 +34,14 @@
         </tbody>
 
     </table>
-		<li><a href="{{ '/' }}"><p><h4><span class="label label-info">Retour </span></h4></p></a> </li>
+    <div class="container-bg">
+		<div class="container">
+            <div class="row">
+                {# <div class="col text-center"> #}
+                    <a href="{{ path('home') }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
+                {# </div> #}
+            </div>
+        </div>
+     </div>
 
 {% endblock %}

@@ -40,7 +40,7 @@
                 
                 #menu-accordeon li {
                     background-color: #729EBF;
-                    background-image: -webkit-linear-gradient(top, #729EBF 0%, #333A40 100%);
+                    background-image: -webkit-linear-gradient(top, red);
                     background-image: linear-gradient(to bottom, #729EBF 0%, #333A40 100%);
                     border-radius: 6px;
                     margin-bottom: 2px;
@@ -109,4 +109,8 @@
                     margin-right: auto;
                     margin-left: auto;
                     margin-bottom: 55px;
+                }
+                
+                .my-class {
+                    background: rgb(227, 222, 222);
                 }

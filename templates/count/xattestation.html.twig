@@ -1,13 +1,15 @@
-{% extends 'count/layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Attestation de paiement{% endblock %}
 
 {% block body %}
 
- <div class="container">
- <div class="alert alert-info">
  <div class="well">
  <ul>
+            <div> <img src="{{ asset('assets/img/logofpi.png') }}" class="img-circle"  alt="logo"></div>
+				<h4>FRONT  POPULAIRE  IVOIRIEN</h4>        
+				<h6>Représentation FPI-FRANCE</h6>        
+			</div>
 
 <caption class="well well-sm"><h2> Attestation de paiement</h2></caption>
 
@@ -18,7 +20,6 @@
                 <th class="well well-sm">N°Adherent:</th>
                 <td class="well well-sm">{{ adhesionId }}</td>
             </tr>
-    
     </table>
 
     <table>
@@ -42,19 +43,9 @@
             {% endfor %}
          
     </table>  
-</ul>
+</u>
 </div>
-</div>
-    </div>
-    <div class="container">
-  <div class="row">
-    <div class="col text-center">
-      <a href="{{ path('home') }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
-
-    </div>
-  </div>
-</div>
-
+<a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
 
 </div>
 {% endblock %} 

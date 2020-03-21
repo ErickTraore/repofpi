@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository") 
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user") 
  * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User implements UserInterface
@@ -31,6 +32,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Regex(
      *     pattern     = "/^((\+|00)33\s?)[67](\s?\d{2}){4}$/")
+     * 
      */
     private $username;
 

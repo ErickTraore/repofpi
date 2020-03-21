@@ -300,6 +300,7 @@ public function editecheance(Request $request, $adhesionId):Response
                         'Technique' => 'ROLE_TECHNIQUE',
                         'Admin' => 'ROLE_ADMIN',
                         'Superadmin' => 'ROLE_SUPER_ADMIN',
+                        'adherent' => 'ROLE_ADHERENT'
                     ],
                     'expanded'  => false, // liste déroulante
                     'multiple'  => true, // choix multiple

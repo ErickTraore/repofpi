@@ -4,6 +4,7 @@
 
 
 {% block body %}
+<div class="container my-class">
 <h3> Pour réaliser votre carte, enregistrez simplement votre photo</h3>
 <div>1- Ouvrez votre logiciel photo sur votre appareil .</div></br>
 <div>2- Prenez vous une photo d'identité.</div></br>
@@ -17,11 +18,8 @@
    {{ form_widget(form) }}
 
 {{ form_end(form) }}
-<a href="{{ '/' }}"><p><h4><span class="label label-success">Annuler Retour</span></h4></p></a>
+<a href="{{ '/' }}"><p><h4><span class="label label-success">Retour</span></h4></p></a>
 
 </div>
-{# <a href="{{ '/' }}"><p><h4><span class="label label-success">Connexion FPI</span></h4></p></a>  #}
-{# <a href="{{ path(app.request.get("/login")) }}">Same page</a> #}
-{# <button class="btn btn-success">{{ label | default('save') | trans }}</button> #}
-{# <a href="{{ 'adhesion_retour' }}"><p><h4><span class="label label-success">Annuler</span></h4></p></a> #}
+</div>
 {% endblock %}

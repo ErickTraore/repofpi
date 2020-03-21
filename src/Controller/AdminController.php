@@ -65,8 +65,7 @@ class AdminController extends AbstractController
             $listusers[]=$user;
         }
         return $this->render('admin/listetotal.html.twig', [
-                'listusers' => $users,
-                'adhesions' => $adhesions
+                'users' => $listusers
                 ]);
     }
         

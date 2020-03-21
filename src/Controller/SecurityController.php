@@ -1,23 +1,53 @@
 <?php
 namespace App\Controller;
 
+use App\Controller\SecurityController;
 use App\Entity\Adhesion;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Security\StubAuthenticator;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse ;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
-{
+{   
+     /**
+     * @Route("/users", name="users_list")
+     * @Method({"GET"})
+     */
+    public function getUsers(Request $request, UserRepository $userRepository)
+    {
+        $users = $userRepository->findAll();
+        /* @var $places Place[] */
+
+        $formatted = [];
+        foreach ($users as $user) {
+                    $formatted[] = [
+                    'id' => $user->getId(),
+                    'username' => $user->getUsername(),
+                    'date_crea' => $user->getDateCrea(),
+                    'nom' => $user->getAdhesion()-> getFirstName(),
+                    'prenom' => $user->getAdhesion()-> getLastName(),
+                    
+                    // 'adhesion' => $user->getAdhesion(),
+                    ];
+                    }
+
+        return new JsonResponse($formatted);
+    }
+    
     /**
      * @Route("mdpupdate", name="mdpupdate", methods={"GET"})
      */
