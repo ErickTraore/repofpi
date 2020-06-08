@@ -3,10 +3,7 @@
 <div class="wel">
 <div class="container-fluid my-class">
 
-        <h3> CONNEXION </h3>
-
-       
-
+        <h4> CONNEXION </h4>
         <form action="{{ path('login') }}" method="post">
          {# <div class="alert alert-success" role="alert">
             Identifiant = n°tél 13chiffres.
@@ -15,8 +12,8 @@
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}  
         <div class="form-group">
-            <label for="username">Identifiant(13 chiffres)</label>
-            <input type="text" style="background-color:powderblue" id="username" name="_username" value="{{ last_username }}" />
+            <label for="username">Identifiant</label>
+            <input type="text" style="background-color:powderblue" placeholder="Tel:13 chiffres" id="username" name="_username" value="{{ last_username }}" />
         </div>
          <div class="form-group">
             <label for="password">Mot  de  Pass</label>

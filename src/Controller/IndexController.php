@@ -106,7 +106,7 @@ class IndexController extends AbstractController
         if (! $user) {
             return $this->redirectToRoute('forgetpass');
         }
-        $insertisok = false;
+        $insertisok = true;
         $numrand =  rand (1000, 9999);
         $pass = $numrand ;
         $pass_hash = password_hash($pass, PASSWORD_BCRYPT);
@@ -135,7 +135,7 @@ class IndexController extends AbstractController
         
     } 
     
- /**
+   /**
      * @Route("/editecheance/{adhesionId}",name="echeance", methods={"GET","POST"})
      * @param Request            $request
      * @param UserRepository $repository

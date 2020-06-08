@@ -22,15 +22,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-  /**
+   /**
    * @Route("/cotisation")
    */
-class CotisationController extends AbstractController
-{
+    class CotisationController extends AbstractController
+    {
     /**
-      *@var AdhesionRepository
-      *
-      */
+    *@var AdhesionRepository
+    */
     private $repository;
 
     public function __construct(AdhesionRepository $repository)
@@ -90,10 +89,10 @@ class CotisationController extends AbstractController
                 $amountdeux = $_POST['amountrois'];
                 // $nbremois = ($amountdeux / 500);
                 $charge = \Stripe\Charge::create([
-            'amount' => $amountdeux,
-            'currency' => 'eur',
-            'description' => 'Discover France Guide',
-            'source' => $token,
+                'amount' => $amountdeux,
+                'currency' => 'eur',
+                'description' => 'Discover France Guide',
+                'source' => $token,
                   ]);
                 $description = 'paiement en ligne';
                 $ref = 'Abonnement';
@@ -114,6 +113,42 @@ class CotisationController extends AbstractController
         }
 
          /**
+    * @Route("/paiement_inondation", name="cotisation_paiement_inondation")
+    */
+    public function paiement_inondation(Request $request, AdhesionRepository $repository)
+    {
+            if (isset($_POST['stripeToken'])) {
+                // \Stripe\Stripe::setApiKey("sk_test_NAzldBsleRwMMbtOKprXgq3R");
+                \Stripe\Stripe::setApiKey("sk_live_6SfP2cSgoy5oNl8Tan8eWSJV");
+                $token = $_POST['stripeToken'];
+            
+                $amountdeux = $_POST['amountrois'];
+                // $nbremois = ($amountdeux / 500);
+                $charge = \Stripe\Charge::create([
+                'amount' => $amountdeux,
+                'currency' => 'eur',
+                'description' => 'Discover France Guide',
+                'source' => $token,
+                  ]);
+                $description = 'paiement en ligne';
+                $ref = 'inondation';
+                $user = $this->getUser();
+                $adhesion = $user->getAdhesion();
+                $adhesionId = $user->getAdhesion()->getId();
+
+           
+                if (!empty($amountdeux) && !empty($description) && !empty($adhesion) && !empty($ref)) {
+                    return $this->redirectToRoute('adhesion_maj_inondation', [
+                    'adhesionId' => $adhesionId,
+                   // 'nbremois' => $nbremois,
+                    'amountdeux' => $amountdeux
+                ]);
+                }
+            }
+            return $this->render('cotisation/traitement_stripeabonnement.html.twig');
+        }
+        
+        /**
     * @Route("/paiement_carte", name="cotisation_paiement_carte")
     */
     public function paiement_carte(Request $request, AdhesionRepository $repository)
@@ -177,18 +212,31 @@ class CotisationController extends AbstractController
         if (!empty($_POST['amountun'])) {
             $extractarif = $_POST['amountun'];     
 
+            return $this->render('cotisation/traitement_stripeabonnement.html.twig', [
+            'amountdeux' => $extractarif,
+            ]);
+        }
+        return $this->render('cotisation/formdon.html.twig');
+    }
+
+   /**
+    * @Route("/inondation", name="cotisation_inondation")
+    */
+    public function inondation(Request $request):Response
+    {
+        if (!empty($_POST['amountun'])) {
+            $extractarif = $_POST['amountun'];     
+
             // if ($_POST['Annuler'] = "Annuler") {
             //     return $this->redirectToRoute('home');  
             // }
  
-
-  
-            return $this->render('cotisation/traitement_stripeabonnement.html.twig', [
+            return $this->render('cotisation/traitement_stripeinondation.html.twig', [
       'amountdeux' => $extractarif,
                  ]);
         }
-        return $this->render('cotisation/formdon.html.twig');
-    }
+        return $this->render('cotisation/forminondation.html.twig');
+    }    
 
         /**
     * @Route("/formCarte", name="cotisation_formCarte")

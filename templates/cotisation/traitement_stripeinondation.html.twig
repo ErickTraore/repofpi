@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Abonnement Paiement!{% endblock %}
+{% block title %}don inondation!{% endblock %}
 
 {% block body %}
 <p><h3>PAIEMENT CARTE BLEUE (€) en euro </h3></p>
 
-<form action="paiement_abonnement" method="POST">
+<form action="paiement_inondation" method="POST">
 <input type ='hidden' name='amountrois' value = {{ amountdeux }}> </input>
         <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -13,7 +13,7 @@
                 data-key="pk_live_CRM6aOQ11RfcncXdqX8jKYpB"
                 data-amount = {{ amountdeux}}
                 data-name="Front Populaire Ivoirien"
-                data-description="Je fais un don"
+                data-description="Don inondation"
                 data-image="{{ asset('assets/img/logofpi.png') }}"
                 data-locale="auto"
                 data-currency="eur"
